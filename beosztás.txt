@@ -1,0 +1,16 @@
+Komponensek
+===========
+
+Framework
+    - Sikszai Gergő
+    - Petrás András
+Game
+    - Toth Tamás
+    - Kresz Marcel
+MI
+    - Angeli Dávid
+    - Németh András
+Stat
+    - Dananaj Pál
+    - Ancsin Attila
+

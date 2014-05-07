@@ -1,0 +1,38 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# eclipse
+.settings/
+.project
+.classpath
+/bin/
+/build/
+target
+.metadata
+bin/**
+tmp/**
+*.tmp
+*.bak
+*.swp
+local.properties
+.loadpath
+android/libs
+
+# netbeans
+nb-configuration.xml
+# ????
+
+# windows
+Thumbs.db
+Desktop.ini
+
+# osx
+.DS_Store
+.svn
+
+# Thumbnails
+._*

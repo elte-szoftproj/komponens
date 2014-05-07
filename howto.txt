@@ -1,0 +1,66 @@
+- Netbeans + Glassfish telepit (Netbeans J2EE csomagban minden benne van)
+- Mysql feltelepit (vagy lehet csinalni akar derbyvel is igazabol...)
+- hozzatok letre egy adatbazist
+- A rootban levo mysql-connector-java.zipbol a jart masoljatok be a glassfish/glassfish/lib konyvtarba
+- Glassfish / app elindit (pl. netbeansbol)
+- Glassfish admin behoz (localhost:4848)
+- resources -> JDBC -> connection pools -> new pool
+	nev: jdbc-kompdb
+	type: DataSource
+	vendor: mysql 
+	+ kovetkezo oldal
+	pinget kapcsoljatok be, segit hibat keresni
+	additional propertiesben a lenyegesek kitoltese (user, servername, databasename, password), a tobbit torolhetitek
+- resources -> jdbc - > resources -> new
+	nev: jdbc-r-kompdb
+- FONTOS: ezeket ne nevezzetek el mashogy, igy hasznalja a szoftver!
+- Configurations -> server-config -> security -> realms -> new
+	name: komp-realm (fontos!)
+	classname: JDBCRealm
+	jaas: jdbcRealm (FONTOS!)
+	JNDI: jdbc-r-kompdb
+	User table: USERS
+	User name column: USERNAME
+	Password column: PASSWORD
+	Group table: GROUPS
+	Group name column: NAME
+	Encrpyption algoirthm: SHA-256
+	Assign groups: users
+- GameType tablaba fel kell venni a jatek tipusokat (pl. kamisado / hu.elte.komp.kamisado)
+- AiType tablaba fel kell venni az AI-kat
+
+
+
+Mit kell megvalositani:
+==========================
+
+
+Framework
+-----
+- A kompgame-ejb osztaly szerintem maradjon kozos mindkettoben, folosleges duplikalni, inkabb csak bonyodalmakhoz vezetne...
+- A kompgame-web projektet kell lemasolni (ketszer, hogy ketto legyen, az lesz a ket frameworunk. Igy egyszerre lehet ket peldanyban, ket kulon URL-en hasznalni
+- A jelenlegi web projekt meg nem mukodik :D Mukodesre kell birni / be kell fejezni (perpillanat login megy, user regisztracio megy, probalok rajonni, hogy kell nev alapjan elerni session beaneket, es utana a jatek is mehet... perpillanat elszallok sajnos egy exceptionnal, pedig onnan mar nem lenne annyira messze, hogy a jatek megjelenitesi resze meglegyen. Jateklista, ilyesmik meg egyaltalan nincs, en azzal nem is akarok foglalkozni)
+- Az a lenyeg, hoy valami szep implementaciokat csinaljunk, pl. egy sima htmleset - egy ajaxosat - egy canvasosat - vagy ami eszetekbe jut
+- A jatekoknak lesznek statikus assetjei (kepek / css / stb), ezeket a mar most is meglevo web projektbe tesszuk, majd onnan kell oket behivatkozni
+
+Game
+-----
+- hu.elte.komp.game.GameInterface -t kell implementalni (igazabol az AbstractGame-bol szarmaztassatok!)
+- emellett kell egy vagy tobb ScoreCalculator is a jatekhoz, ez megegyezes kerdese, mas is irhat (pl. aisok) ilyen reszkomponenseket, de akkor dolgozzatok ossze
+- ez egy olyan osztaly, ami el tudja menteni magat egy Stringkent, lehetoleg rovid formaban, valamint meg tudja jeleniteni magat egy NxN-es tablazatkent
+- ha olyan jatekot akartok, aminek nem csak egy tablazat kell, irjatok, es kitalalunk valamit. Elso korben azert probalkoznek egy ilyennel, mert eleg egyszeru interfeszt ad, es igy konnyu implementalni nagyon mashogy mukodo UI-kat ele.
+- egyelore probaljatok azt a reszet implementalni a dolognak, ami mar egesz fixen megvan, tehat pl. celszeru egy String <-> Board konverziot csinalni, meghatarozni a valid kattintasok listajat, stb...
+- adatbazis mentessel ne foglalkozzatok, meg lesz egy "saveStep" jellegu eljaras az abstractgameben, mert a stat miatt amugy is kelleni fog.
+- FONTOS: kattintas != lepes. Pl. a sakkban egy lepes ket kattintasbol all. Az elso kivalasztja a babut, a masodik pedig azt, hogy hova lepunk vele. 
+
+Ai
+-----
+- Lasd AiInterface. Implementalni kell egyet...
+- mivel ez egy eleg apro feladat, es GT be fog szolni erte hogy keveset dolgoztatok vele (ez volt a kifogasa az elozo bemutatasunkkor), javasolnam, hogy szalljatok be mas komponensekbe is, de lehetoleg valami elkulonitheto reszre (pl. az ertekelo osztalyok), vagy csinaljatok tobbet is
+
+Stat
+-----
+- Meg kis turelmet kerek, igyekszek hamar osszeszedni ezt is, hogyan kellene megcsinalni.
+- Lenyegeben viszont: kapni fogtok egy darab notificationt, amikor a lepes megtortenik (a lepes leirasa, hogy veget ert e vele a jatek, kik a jatekosok, stb...)
+- Ha valamelyik AI igenyli (igenyli??), biztositani kene fele egy interfeszt, ami segiti (pl. ebbol a lepesbol hany szazalekos a nyero jatekok szama, vagy valami... otletek?)
+- Csinalni kene nehany nezetet, amiben megjelenitetek statisztikat (ezeket a mar jelenleg is megnezo web nezetbe)

@@ -27,6 +27,7 @@ public class GameBean {
 
     private String gameId;
     
+    
     GameInterface game;
     
     /**
@@ -49,7 +50,7 @@ public class GameBean {
         InitialContext ic;
         try {
             ic = new InitialContext();
-            game = (GameInterface) ic.lookup("hu.elte.komp.kamisado");
+            game = (GameInterface) ic.lookup("java:app/kompgame-game-kamisado-1.0-SNAPSHOT/hu.elte.komp.kamisado");
         } catch (NamingException ex) {
             Logger.getLogger(GameBean.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException(ex);

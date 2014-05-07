@@ -27,6 +27,7 @@
             <web-resource-name>Game Pages</web-resource-name>
             <description/>
             <url-pattern>/secure/*</url-pattern>
+            <url-pattern>/faces/secure/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>

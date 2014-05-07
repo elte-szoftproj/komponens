@@ -9,13 +9,14 @@
     </h:head>
     
     <h:body>
-        X: #{param.id}
-        Board size: #{GameBean.board.height.toString()} 55
+        Board size: Height: #{GameBean.board.height} Width: #{GameBean.board.width}
         <table class="gametable kamisado">
-            <ui:repeat var="row" value="#{GameBean.board}" varStatus="status">
-                <tr>
-                    <ui:repeat var="cell" value="row" varStatus="cellStatus">
-                        <td>x</td>
+            <ui:repeat var="row" value="#{GameBean.board.pieces}" varStatus="status">
+                <tr class="row-#{status.index}">
+                    <ui:repeat var="cell" value="#{row}" varStatus="cellStatus">
+                        <td style="#{cell.styleOverride}" class="#{cell.cssClass} col-#{cellStatus.index}">
+                            #{cell.content}
+                        </td>
                     </ui:repeat>
                 </tr>
             </ui:repeat>

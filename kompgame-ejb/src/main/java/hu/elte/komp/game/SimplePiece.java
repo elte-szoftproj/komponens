@@ -38,7 +38,7 @@ public class SimplePiece implements Piece{
 
     @Override
     public String getCssClass() {
-        return cssClass;
+        return cssClass + (isClickable ? " clickable" : "");
     }
 
     @Override

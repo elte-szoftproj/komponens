@@ -8,6 +8,7 @@ import hu.elte.komp.game.Board;
 import hu.elte.komp.game.GameInterface;
 import hu.elte.komp.game.Position;
 import hu.elte.komp.model.Game;
+import java.util.Set;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -46,6 +47,11 @@ public class KamisadoGame implements GameInterface {
 
     @Override
     public void doAiStep() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Set<String> getScoreCalculators() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

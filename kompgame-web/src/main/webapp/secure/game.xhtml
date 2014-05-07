@@ -9,6 +9,20 @@
     </h:head>
     
     <h:body>
+        
+        <style>
+            .gametable td {
+                width: 30px; height: 30px; border: #000 1px solid; text-align: center; vertical-align: middle;
+                font-family: sans-serif; font-weight: bold;
+                -webkit-text-stroke-width: 1px;
+               -webkit-text-stroke-color: white;
+               font-size: 30px;
+            }
+            tr,td,th,table{ border-collapse: collapse; }
+            .clickable { cursor: pointer; }
+            .clickable:hover { border: #e33b06 1px solid; }
+        </style>
+        
         Board size: Height: #{GameBean.board.height} Width: #{GameBean.board.width}
         <table class="gametable kamisado">
             <ui:repeat var="row" value="#{GameBean.board.pieces}" varStatus="status">

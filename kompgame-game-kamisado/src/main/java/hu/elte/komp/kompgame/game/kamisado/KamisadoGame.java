@@ -7,6 +7,7 @@ package hu.elte.komp.kompgame.game.kamisado;
 import hu.elte.komp.game.Board;
 import hu.elte.komp.game.GameInterface;
 import hu.elte.komp.game.Position;
+import hu.elte.komp.game.SimplePiece;
 import hu.elte.komp.model.Game;
 import java.util.Set;
 import javax.ejb.LocalBean;
@@ -37,7 +38,9 @@ public class KamisadoGame implements GameInterface {
 
     @Override
     public Board getCurrentBoard(String player) {
-        return new Board(8,8);
+        
+        // displays the initial board for now
+        return BoardHelper.getBoardForString(BoardHelper.getInitialBoard());
     }
 
     @Override

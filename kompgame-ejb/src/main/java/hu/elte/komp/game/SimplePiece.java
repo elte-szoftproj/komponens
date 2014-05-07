@@ -44,8 +44,8 @@ public class SimplePiece implements Piece{
     @Override
     public String getStyleOverride() {
         return 
-                (textColor == null ? "" : "color: #" + textColor) +
-                (backgroundColor == null ? "" : "background-color: #" + backgroundColor) +
+                (textColor == null ? "" : "color: " + textColor + "; ") + 
+                (backgroundColor == null ? "" : "background-color: " + backgroundColor + "; ") +
                 styleOverride;
     }
 

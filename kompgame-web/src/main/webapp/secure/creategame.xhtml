@@ -12,12 +12,12 @@
             <h:panelGrid columns="2">
                 
                 <h:selectOneListbox value="#{gameController.current.aiName}" id="ain">
-                    <f:selectItem itemValue="1" itemLabel="ai1" />
+                    <f:selectItems value="#{gameController.aiTypes}" />
                 </h:selectOneListbox>
                 
                 
                 <h:selectOneListbox value="#{gameController.current.aiScoreCalculator}" id="aiv">
-                    <f:selectItem itemValue="2" itemLabel="aiv1" />
+                    <f:selectItems value="#{gameController.scoreTypes}" />
                 </h:selectOneListbox>
             </h:panelGrid>
             

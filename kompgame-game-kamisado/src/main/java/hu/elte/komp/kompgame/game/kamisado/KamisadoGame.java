@@ -9,6 +9,7 @@ import hu.elte.komp.game.Board;
 import hu.elte.komp.game.Position;
 import hu.elte.komp.game.ScoreCalculator;
 import hu.elte.komp.model.Game;
+import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -47,7 +48,10 @@ public class KamisadoGame extends AbstractGame {
 
     @Override
     public Set<String> getScoreCalculators() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Set<String> s = new HashSet<>();
+        s.add("random");
+        s.add("incremental");
+        return s;
     }
 
     @Override

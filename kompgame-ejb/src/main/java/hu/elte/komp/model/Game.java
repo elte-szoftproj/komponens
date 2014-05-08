@@ -9,9 +9,13 @@ package hu.elte.komp.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 /**
@@ -29,7 +33,7 @@ public class Game implements Serializable {
     private Long id;
 
     @Version
-    private String version;
+    private Long version;
     
     /**
      * A jatektipus neve, ez alapjan azonosithato, mihez tartozik
@@ -57,6 +61,7 @@ public class Game implements Serializable {
     /**
      * Mikor tortent a legutobbi lepes
      */
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastStepAt;
     
     /**
@@ -77,6 +82,7 @@ public class Game implements Serializable {
     /**
      * A jatek aktualis allapota egy enumban. Bovebb info, lasd enum doksi.
      */
+    @Enumerated(EnumType.STRING)
     private GameState gameState;
     
     public Long getId() {
@@ -112,7 +118,7 @@ public class Game implements Serializable {
         return "hu.elte.komp.model.Game[ id=" + id + " ]";
     }
 
-    public String getVersion() {
+    public Long getVersion() {
         return version;
     }
 

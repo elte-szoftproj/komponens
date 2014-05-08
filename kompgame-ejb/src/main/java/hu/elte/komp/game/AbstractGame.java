@@ -6,13 +6,11 @@
 
 package hu.elte.komp.game;
 
+import hu.elte.komp.GameService;
 import hu.elte.komp.model.Game;
 import hu.elte.komp.model.GameState;
 import java.util.Date;
-import java.util.Map;
-import java.util.Set;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.ejb.EJB;
 
 /**
  *
@@ -20,8 +18,9 @@ import javax.persistence.PersistenceContext;
  */
 public abstract class AbstractGame implements GameInterface, GameGraphInterface {
 
-    @PersistenceContext(unitName="hu.elte.komp_kompgame-pu")
-    private EntityManager em;
+
+    @EJB
+    private GameService gameService;
     private long gameId;
     
     @Override
@@ -55,7 +54,7 @@ public abstract class AbstractGame implements GameInterface, GameGraphInterface 
     
     @Override
     public Game getEntityInfo() {
-        return em.find(Game.class, gameId);
+        return gameService.findGameById(gameId);
     }
 
     @Override
@@ -64,7 +63,7 @@ public abstract class AbstractGame implements GameInterface, GameGraphInterface 
         g.setBoardInfo(createBoard());
         g.setGameState(GameState.WAITING);
         g.setLastStepAt(new Date());
-        em.persist(g);
+        gameService.persistGame(g);
         
         return g;
     }

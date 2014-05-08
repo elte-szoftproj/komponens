@@ -4,6 +4,9 @@
     <jta-data-source>jdbc-r-kompdb</jta-data-source>
     <class>hu.elte.komp.model.User</class>
     <class>hu.elte.komp.model.Group</class>
+    <class>hu.elte.komp.model.AiType</class>
+    <class>hu.elte.komp.model.GameType</class>
+    <class>hu.elte.komp.model.Game</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

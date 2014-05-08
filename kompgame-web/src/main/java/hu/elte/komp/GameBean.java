@@ -61,4 +61,5 @@ public class GameBean {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         return getGame().getCurrentBoard("hu:" + principal.getName());
     }
+    
 }

@@ -57,5 +57,5 @@ public interface GameInterface {
     
     public Set<String> getScoreCalculators();
     
-    
+    public Game createGame(String firstPlayer);
 }

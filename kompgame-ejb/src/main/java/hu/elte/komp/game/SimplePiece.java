@@ -77,9 +77,6 @@ public class SimplePiece implements Piece{
     public void setBackgroundColor(String backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
-    
-    
-    
-    
+      
     
 }

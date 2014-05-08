@@ -183,4 +183,8 @@ public class Game implements Serializable {
     public boolean isCurrentPlayer(String principal) {
         return ("hu:" + principal).equals(getCurrentPlayer());
     }
+    
+    public boolean isFirstPlayer(String principal) {
+        return ("hu:" + principal).equals(getPlayer1());
+    }
 }

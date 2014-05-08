@@ -33,11 +33,5 @@ public interface GameGraphInterface {
      * @return
      */
     long getStepScoreForCurrentPlayer(Object step);
-
-    /**
-     * Igazzal ter vissza, ha az adott lepesben eppen az aktualis jatekosnak kell lepnie
-     * @param step
-     */
-    boolean isCurrentPlayersTurn(Object step);
     
 }

@@ -10,7 +10,7 @@ package hu.elte.komp.model;
  *
  * @author Zsolt
  */
-enum GameState {
+public enum GameState {
     WAITING,
     
     ONGOING_PLAYER1,

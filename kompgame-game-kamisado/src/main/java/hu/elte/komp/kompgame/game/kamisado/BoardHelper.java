@@ -7,12 +7,17 @@
 package hu.elte.komp.kompgame.game.kamisado;
 
 import hu.elte.komp.game.Board;
+import hu.elte.komp.game.Position;
 import hu.elte.komp.game.SimplePiece;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
- * A string reprezentacio: 8x8 karakter, a feher babuk abcdefgh, a sotet babuk
+ * A string reprezentacio: 8x8 karakter, a sotet (p1) babuk abcdefgh, a feher babuk (p2)
  * ijklmnop. Az aktivan kivalasztott babu nagybetuvel van irva.
+ * 
+ * Igazabol ez az osztaly tartalmazza a jatek kb. teljes logikajat is
  * 
  * @author Zsolt
  */
@@ -49,7 +54,7 @@ public class BoardHelper {
     }
     
     static Color charToColor(char c) {
-        switch (c) {
+        switch (Character.toLowerCase(c)) {
             case 'i':
             case'h': 
                 return Color.ORANGE;
@@ -92,10 +97,66 @@ public class BoardHelper {
                 "abcdefgh"
                 ;
     }
+    
+    static class MoveResult { 
+        String str;
+        
+        boolean endTurn;
 
-    static Board getBoardForString(String s) {
+        public MoveResult(String str, boolean endTurn) {
+            this.str = str;
+            this.endTurn = endTurn;
+        }
+    }
+    
+    static MoveResult clickOn(String s, Position pos, boolean isPlayerOne) {
+        
+        if (!isPlayerOne) {
+            // reverse the lines, upward direction is to the top!
+            String[] reva = s.split("\n");
+            ArrayUtils.reverse(reva);
+            s = StringUtils.join(reva, "\n");
+        }
+        
+        char c = s.charAt(pos.getY()*8+pos.getX());
+        
+        Position largePos = new Position(-1,-1);
+        Board b = getBoardForString(s, isPlayerOne, largePos);
+                
+        SimplePiece p = (SimplePiece) b.getPieces()[pos.getY()][pos.getX()];
+        
+        if (!p.isClickable()) {
+            return new MoveResult(s, false);
+        }
+        
+        if (c == ' ') {
+            // move upcase there as downcase
+            char l = s.charAt(largePos.getY()*8+largePos.getX());
+            s = s.replace(l, ' ');
+            StringBuilder sb = new StringBuilder(s);
+            sb.setCharAt(pos.getY()*8+pos.getX(), Character.toLowerCase(l));
+            return new MoveResult(sb.toString(), true);
+        } else {
+            return new MoveResult(s.toLowerCase().replace(c, Character.toUpperCase(c)), false);
+        }
+        
+    }
+
+    static Board getBoardForString(String s, boolean isPlayerOne) {
+        return getBoardForString(s, isPlayerOne, new Position(-1,-1));
+    }
+    
+    static Board getBoardForString(String s, boolean isPlayerOne, Position active) {
         Board b = new Board(8,8);
         
+        
+        if (!isPlayerOne) {
+            // reverse the lines, upward direction is to the top!
+            String[] reva = s.split("\n");
+            ArrayUtils.reverse(reva);
+            s = StringUtils.join(reva, "\n");
+        }
+                
         for (int iy=0;iy<8;iy++) {
             for (int ix=0;ix<8;ix++) {
                 SimplePiece sp = new SimplePiece();
@@ -104,14 +165,58 @@ public class BoardHelper {
                 sp.setBackgroundColor(colorToString(colorMap[iy][ix]));
                 
                 if (c != ' ') {
-                    sp.setIsClickable(true);
-                    sp.setContent("◉");
+                    if (c < 'i' ^ !isPlayerOne) {
+                        if (!Character.isUpperCase(c)) { sp.setIsClickable(true); }
+                    }
+                    if (c < 'i') {
+                        sp.setContent("◉");
+                    } else {
+                        sp.setContent("◈");
+                    }
                     sp.setTextColor(colorToString(charToColor(c)));
+                } else {
+                    sp.setContent("");
+                }
+                
+                if (Character.isUpperCase(c)) {
+                    active.setX(ix);
+                    active.setY(iy);
+                    sp.setStyleOverride("border-color: #f00;");
                 }
                 
                 b.getPieces()[iy][ix] = sp;
             }
         }
+        
+        if (active.getX() != -1) {
+            int d = 0;
+            boolean stopLeft = false, stopUp = false, stopRight = false;
+            for (int i = active.getY() - 1 ; i > 0 ; i--) {
+                d++;
+                if (active.getX() - d >= 0 && !stopLeft) {
+                    SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX() - d];
+                    if (!p.getContent().equals("")) { stopLeft = true; } else {
+                        p.setStyleOverride("border-color: cyan; ");
+                        p.setIsClickable(true);
+                    }
+                }
+                if (active.getX() + d <= 7 && ! stopRight) {
+                    SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX() + d];
+                    if (!p.getContent().equals("")) { stopRight = true; } else {
+                        p.setStyleOverride("border-color: cyan; ");
+                        p.setIsClickable(true);
+                    }
+                }
+                if (!stopUp) {
+                    SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX()];
+                    if (!p.getContent().equals("")) { stopUp  = true; } else {
+                        p.setStyleOverride("border-color: cyan; ");
+                        p.setIsClickable(true);
+                    }
+                }
+            }
+        }
+        
         
         return b;
     }

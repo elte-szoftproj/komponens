@@ -7,8 +7,12 @@
 package hu.elte.komp.game;
 
 import hu.elte.komp.model.Game;
+import hu.elte.komp.model.GameState;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -16,6 +20,10 @@ import java.util.Set;
  */
 public abstract class AbstractGame implements GameInterface, GameGraphInterface {
 
+    @PersistenceContext(unitName="hu.elte.komp_kompgame-pu")
+    private EntityManager em;
+    private long gameId;
+    
     @Override
     public void doAiStep() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -41,10 +49,26 @@ public abstract class AbstractGame implements GameInterface, GameGraphInterface 
     }
 
     @Override
-    public Game getEntityInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void loadGameId(long id) {
+        gameId = id;
     }
     
-    
+    @Override
+    public Game getEntityInfo() {
+        return em.find(Game.class, gameId);
+    }
+
+    @Override
+    public Game createGame(String firstPlayer) {
+        Game g = new Game();
+        g.setBoardInfo(createBoard());
+        g.setGameState(GameState.WAITING);
+        g.setLastStepAt(new Date());
+        em.persist(g);
+        
+        return g;
+    }
+
+    protected abstract String createBoard();
     
 }

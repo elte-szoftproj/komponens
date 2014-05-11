@@ -35,32 +35,50 @@ Mit kell megvalositani:
 ==========================
 
 
-Framework
+Framework (kompgame-web, kompgame-ejb)
 -----
-- A kompgame-ejb osztaly szerintem maradjon kozos mindkettoben, folosleges duplikalni, inkabb csak bonyodalmakhoz vezetne...
-- A kompgame-web projektet kell lemasolni (ketszer, hogy ketto legyen, az lesz a ket frameworunk. Igy egyszerre lehet ket peldanyban, ket kulon URL-en hasznalni
-- A jelenlegi web projekt meg nem mukodik :D Mukodesre kell birni / be kell fejezni (perpillanat login megy, user regisztracio megy, probalok rajonni, hogy kell nev alapjan elerni session beaneket, es utana a jatek is mehet... perpillanat elszallok sajnos egy exceptionnal, pedig onnan mar nem lenne annyira messze, hogy a jatek megjelenitesi resze meglegyen. Jateklista, ilyesmik meg egyaltalan nincs, en azzal nem is akarok foglalkozni)
-- Az a lenyeg, hoy valami szep implementaciokat csinaljunk, pl. egy sima htmleset - egy ajaxosat - egy canvasosat - vagy ami eszetekbe jut
-- A jatekoknak lesznek statikus assetjei (kepek / css / stb), ezeket a mar most is meglevo web projektbe tesszuk, majd onnan kell oket behivatkozni
+- Szepiteni kene a feluleten, levenni a folosleges reszeket (pl. user listazas)
+- A jateklista jelenleg be van egetve a gamelist.xhtml-ben, ezt dinamikussa kene tenni (GameService-ben van ra eljaras)
+- Unitteszteket csinalni arra, amire lehet
+- Dokumentaciot elkesziteni
+- Ha meg egy framework keszito elokerul: kompgame-web project duplikalasa, masik felulet elkeszitese, a kompgame-ejb projektet beadni mint kozos munka
 
 Game
 -----
 - hu.elte.komp.game.GameInterface -t kell implementalni (igazabol az AbstractGame-bol szarmaztassatok!)
-- emellett kell egy vagy tobb ScoreCalculator is a jatekhoz, ez megegyezes kerdese, mas is irhat (pl. aisok) ilyen reszkomponenseket, de akkor dolgozzatok ossze
+- emellett kell egy vagy tobb ScoreCalculator is a jatekhoz, ez megegyezes kerdese, mas is irhat (pl. AI-sok) ilyen reszkomponenseket, de akkor dolgozzatok ossze
 - ez egy olyan osztaly, ami el tudja menteni magat egy Stringkent, lehetoleg rovid formaban, valamint meg tudja jeleniteni magat egy NxN-es tablazatkent
 - ha olyan jatekot akartok, aminek nem csak egy tablazat kell, irjatok, es kitalalunk valamit. Elso korben azert probalkoznek egy ilyennel, mert eleg egyszeru interfeszt ad, es igy konnyu implementalni nagyon mashogy mukodo UI-kat ele.
-- egyelore probaljatok azt a reszet implementalni a dolognak, ami mar egesz fixen megvan, tehat pl. celszeru egy String <-> Board konverziot csinalni, meghatarozni a valid kattintasok listajat, stb...
-- adatbazis mentessel ne foglalkozzatok, meg lesz egy "saveStep" jellegu eljaras az abstractgameben, mert a stat miatt amugy is kelleni fog.
 - FONTOS: kattintas != lepes. Pl. a sakkban egy lepes ket kattintasbol all. Az elso kivalasztja a babut, a masodik pedig azt, hogy hova lepunk vele. 
+
+Game : Kamisado
+--
+- minta jatek, de ha az egyik jatekfejleszto akarja, kiszepitheto, es beadhatjuk mint egyik jateknak
+- a szabalyai fennvannak neten
+- a kinezeten lehet szepiteni kene / jobban le kene tesztelni, hogy mukodik e
+- unittesztek, dokumentacio kene
+- irni kene par heurisztikat pontozasra, amit az AI-k hasznalhatnak, mert jelenleg a konstans zero nem tul jo
+-- lehetne pl. egy nagyon egyszeru a legkisebb / atlagos tavolsag a tulso oldaltol
+-- neten meg lehetne nezni, mit hasznalnak meg ehhez
+
+Game : ???
+--
+Mas egyszeru jatekotletek, amit a kamiaado alapjan gyorsan lehetne:
+- dama
+- ???
+Egyeb egyszeru es bonyolult, csak egy tablat hasznalo jatekok:
+- sakk (de az bonyolult...)
+- fix tablameretu amoba (megjegyzes: nem feltetlenul fix, lehetne a tablat folyamatosan +1-el novelni, mint az aktualis minta)
+- ???
 
 Ai
 -----
 - Lasd AiInterface. Implementalni kell egyet...
-- mivel ez egy eleg apro feladat, es GT be fog szolni erte hogy keveset dolgoztatok vele (ez volt a kifogasa az elozo bemutatasunkkor), javasolnam, hogy szalljatok be mas komponensekbe is, de lehetoleg valami elkulonitheto reszre (pl. az ertekelo osztalyok), vagy csinaljatok tobbet is
+-- van egy minta, a randomai, azt azert bemutatni nem akarjuk szerintem :) minmax, alfabeta, stb...
+-- mivel harman is vagytok AI-sok, szerintem segitsetek be a jatekosoknak heurisztikat irni, az egy egesz jol elkulonulo alkomponens
+- mivel ez egy eleg apro feladat, es GT be fog szolni erte hogy keveset dolgoztatok vele (ez volt a kifogasa az elozo bemutatasunkkor), javasolnam, hogy szalljatok be mas komponensekbe is, de lehetoleg valami elkulonitheto reszre (pl. az ertekelo osztalyok, a framework html felulete, stb), vagy csinaljatok tobbet is
 
 Stat
 -----
-- Meg kis turelmet kerek, igyekszek hamar osszeszedni ezt is, hogyan kellene megcsinalni.
-- Lenyegeben viszont: kapni fogtok egy darab notificationt, amikor a lepes megtortenik (a lepes leirasa, hogy veget ert e vele a jatek, kik a jatekosok, stb...)
-- Ha valamelyik AI igenyli (igenyli??), biztositani kene fele egy interfeszt, ami segiti (pl. ebbol a lepesbol hany szazalekos a nyero jatekok szama, vagy valami... otletek?)
-- Csinalni kene nehany nezetet, amiben megjelenitetek statisztikat (ezeket a mar jelenleg is megnezo web nezetbe)
+- ezt skippeljuk, mert ugy tunik aki ezt vallalta, mar nem jelentkezik
+- ha valamelyikotok meg is raer, szerintem szalljatok be az egyik masik komponenshez +1 dologgal

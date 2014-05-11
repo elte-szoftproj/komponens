@@ -5,16 +5,23 @@
 package hu.elte.komp.kompgame.game.kamisado;
 
 import hu.elte.komp.game.AbstractGame;
+import hu.elte.komp.game.AiInterface;
 import hu.elte.komp.game.Board;
+import hu.elte.komp.game.GameInterface;
 import hu.elte.komp.game.Position;
 import hu.elte.komp.game.ScoreCalculator;
+import hu.elte.komp.model.AiType;
 import hu.elte.komp.model.Game;
 import hu.elte.komp.model.GameState;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
@@ -58,31 +65,39 @@ public class KamisadoGame extends AbstractGame {
     public void doAiStep() {
         // TODO: move this method to abstractgame!
         Game g = getEntityInfo();
-        try {
-            Object currentStep = getCurrentStep();
-            Object choosenStep = null;
-            for(Object o : getPossibleSteps(currentStep)) {
-                choosenStep = o;
-                break;
-            }
-            if (choosenStep == null) {
-                // give up!
-                g.setGameState(GameState.PLAYER1_WON);
-            } else {
-                doStep(g, choosenStep);
-                g.setGameState(GameState.ONGOING_PLAYER1);
-            }
-        } catch (Exception e) {
-            g.setGameState(GameState.PLAYER1_WON);
+        String[] aiInfo = g.getCurrentPlayerName().split("\\|");
+        AiType at = getGameService().findAiByName(aiInfo[0]);
+        if (at == null) {
+            throw new RuntimeException("Ai not found: " + aiInfo[0]);
         }
+        InitialContext ic;
+        try {
+            ic = new InitialContext();
+            AiInterface ai = (AiInterface) ic.lookup(at.getUrl());
+            try {
+                Object step = ai.getNextStep(this);
+                if (step == null) {
+                    g.setGameState(GameState.PLAYER1_WON);
+                } else {
+                    doStep(g, step);
+                    g.setGameState(GameState.ONGOING_PLAYER1);
+                }
+            } catch (Exception e) {
+                g.setGameState(GameState.PLAYER1_WON);
+            }
+        } catch (NamingException ex) {
+            // AI not found :(
+            //g.setGameState(GameState.PLAYER1_WON);
+            throw new RuntimeException(ex);
+        }
+        
         getGameService().updateGame(g);
     }
 
     @Override
     public Set<String> getScoreCalculators() {
         Set<String> s = new HashSet<>();
-        s.add("random");
-        s.add("incremental");
+        s.add("zero");
         return s;
     }
 
@@ -93,7 +108,7 @@ public class KamisadoGame extends AbstractGame {
 
     @Override
     protected ScoreCalculator getScoreCalculator(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ZeroCalculator();
     }
 
     @Override

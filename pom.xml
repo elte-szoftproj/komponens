@@ -11,5 +11,6 @@
     <module>kompgame-web</module>
     <module>kompgame-ejb</module>
     <module>kompgame-game-kamisado</module>
+    <module>komponens-ai-random</module>
   </modules>
 </project>

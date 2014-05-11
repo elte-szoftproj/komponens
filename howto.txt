@@ -26,8 +26,8 @@
 	Group name column: NAME
 	Encrpyption algoirthm: SHA-256
 	Assign groups: users
-- GameType tablaba fel kell venni a jatek tipusokat (pl. kamisado / hu.elte.komp.kamisado)
-- AiType tablaba fel kell venni az AI-kat
+- GameType tablaba fel kell venni a jatek tipusokat (pl. kamisado / "java:app/kompgame-game-kamisado-1.0-SNAPSHOT/hu.elte.komp.kamisado")
+- AiType tablaba fel kell venni az AI-kat (pl. random / "java:app/komponens-ai-random-1.0-SNAPSHOT/hu.elte.komp.ai.random")
 
 
 

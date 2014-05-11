@@ -34,7 +34,7 @@ public class BoardHelper {
                 return GameState.PLAYER1_WON;
             }
             if (board.charAt(63-i) >= 'i' && board.charAt(63-i) <= 'p') {
-                return GameState.PLAYER1_WON;
+                return GameState.PLAYER2_WON;
             }
         }
         

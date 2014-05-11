@@ -183,7 +183,7 @@ public class Game implements Serializable {
     }
     
     public String getCurrentPlayerName() {
-        return (getCurrentPlayer() == null) ? null : getCurrentPlayer().split(":")[0];
+        return (getCurrentPlayer() == null) ? null : getCurrentPlayer().split(":")[1];
     }
     
     public boolean isCurrentPlayer(String principal) {

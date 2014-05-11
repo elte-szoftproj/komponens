@@ -6,6 +6,7 @@
 
 package hu.elte.komp.game;
 
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -25,7 +26,7 @@ public interface GameGraphInterface {
      * @param step
      * @return
      */
-    Set<Object> getPossibleSteps(Object step);
+    Iterable getPossibleSteps(Object step);
 
     /**
      * Megmondja, mekkora az adott erteke, ha a jatekos AI. Ha human, 0-val ter vissza.

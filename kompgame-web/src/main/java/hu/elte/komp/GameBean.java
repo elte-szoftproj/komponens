@@ -48,6 +48,12 @@ public class GameBean {
             Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
             getGame().clickedOn("hu:" + principal.getName(), new Position(c, r));
         }
+        
+        if (getGame().getEntityInfo().isCurrentPlayerAi()) {
+            System.out.println("nop");
+            getGame().doAiStep();
+        }
+        
         //getGame();
     }
     

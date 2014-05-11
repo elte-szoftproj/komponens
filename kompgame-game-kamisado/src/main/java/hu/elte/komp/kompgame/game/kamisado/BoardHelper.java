@@ -11,6 +11,7 @@ import hu.elte.komp.game.Position;
 import hu.elte.komp.game.SimplePiece;
 import hu.elte.komp.model.Game;
 import hu.elte.komp.model.GameState;
+import java.util.Iterator;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -115,12 +116,11 @@ public class BoardHelper {
     }
     
     static MoveResult clickOn(String s, Position pos, boolean isPlayerOne) {
-        
         if (!isPlayerOne) {
             // reverse the lines, upward direction is to the top!
-            String[] reva = s.split("\n");
+            String[] reva = splitStringEvery(s, 8);
             ArrayUtils.reverse(reva);
-            s = StringUtils.join(reva, "\n");
+            s = StringUtils.join(reva, "");
         }
         
         char c = s.charAt(pos.getY()*8+pos.getX());
@@ -158,9 +158,9 @@ public class BoardHelper {
         
         if (!isPlayerOne) {
             // reverse the lines, upward direction is to the top!
-            String[] reva = s.split("\n");
+            String[] reva = splitStringEvery(s, 8);
             ArrayUtils.reverse(reva);
-            s = StringUtils.join(reva, "\n");
+            s = StringUtils.join(reva, "");
         }
                 
         for (int iy=0;iy<8;iy++) {
@@ -224,5 +224,25 @@ public class BoardHelper {
         
         
         return b;
+    }
+
+
+    static Iterator<KamisadoAiIterator.StepInfo> getPossibleSteps(String s, boolean isPlayerOne) {
+        return new KamisadoAiIterator(s, isPlayerOne);
+    }
+    
+    static String[] splitStringEvery(String s, int interval) {
+        int arrayLength = (int) Math.ceil(((s.length() / (double) interval)));
+        String[] result = new String[arrayLength];
+
+        int j = 0;
+        int lastIndex = result.length - 1;
+        for (int i = 0; i < lastIndex; i++) {
+            result[i] = s.substring(j, j + interval);
+            j += interval;
+        } //Add the last bit
+        result[lastIndex] = s.substring(j);
+
+        return result;
     }
 }

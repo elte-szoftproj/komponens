@@ -165,13 +165,12 @@ public class BoardHelper {
                 sp.setBackgroundColor(colorToString(colorMap[iy][ix]));
                 
                 if (c != ' ') {
-                    if (c < 'i' ^ !isPlayerOne) {
-                        if (!Character.isUpperCase(c)) { sp.setIsClickable(true); }
-                    }
                     if (c < 'i') {
                         sp.setContent("◉");
+                        if (!Character.isUpperCase(c) && isPlayerOne) { sp.setIsClickable(true); }
                     } else {
                         sp.setContent("◈");
+                        if (!Character.isUpperCase(c) && !isPlayerOne) { sp.setIsClickable(true); }
                     }
                     sp.setTextColor(colorToString(charToColor(c)));
                 } else {

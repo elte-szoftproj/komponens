@@ -191,6 +191,7 @@ public class Game implements Serializable {
     }
     
     public boolean isFirstPlayer(String principal) {
-        return ("hu:" + principal).equals(getPlayer1());
+        String modPrinc = (principal.startsWith("hu:") ? principal: "hu:" + principal);
+        return modPrinc.equals(getPlayer1());
     }
 }

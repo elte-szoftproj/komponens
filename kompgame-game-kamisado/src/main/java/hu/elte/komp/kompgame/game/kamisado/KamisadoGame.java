@@ -9,6 +9,7 @@ import hu.elte.komp.game.Board;
 import hu.elte.komp.game.Position;
 import hu.elte.komp.game.ScoreCalculator;
 import hu.elte.komp.model.Game;
+import hu.elte.komp.model.GameState;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ejb.LocalBean;
@@ -38,13 +39,20 @@ public class KamisadoGame extends AbstractGame {
     public void clickedOn(String player, Position clickPosition) {
         Game g = getEntityInfo();
         BoardHelper.MoveResult clickRes = BoardHelper.clickOn(g.getBoardInfo(), clickPosition, g.isFirstPlayer(player));
-        
+        g.setBoardInfo(clickRes.str);
+        if (clickRes.nextState != null) {
+            g.setGameState(clickRes.nextState);
+        }
+        getGameService().updateGame(g);
         // SAVE!!!
     }
 
     @Override
     public void doAiStep() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Game g = getEntityInfo();
+        // TODO: real action
+        g.setGameState(GameState.ONGOING_PLAYER1);
+        getGameService().updateGame(g);
     }
 
     @Override

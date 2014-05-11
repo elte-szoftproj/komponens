@@ -8,6 +8,7 @@ package hu.elte.komp;
 
 import hu.elte.komp.game.Board;
 import hu.elte.komp.game.GameInterface;
+import hu.elte.komp.game.Position;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,8 @@ public class GameBean {
 
     private String gameId;
     
+    private String clickR;
+    private String clickC;
     
     GameInterface game;
     
@@ -36,6 +39,15 @@ public class GameBean {
     public GameBean() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         this.gameId = facesContext.getExternalContext().getRequestParameterMap().get("id");
+        this.clickR = facesContext.getExternalContext().getRequestParameterMap().get("clickR");
+        this.clickC = facesContext.getExternalContext().getRequestParameterMap().get("clickC");
+        
+        if (clickR != null) {
+            int r = Integer.parseInt(clickR);
+            int c = Integer.parseInt(clickC);
+            Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+            getGame().clickedOn("hu:" + principal.getName(), new Position(c, r));
+        }
         //getGame();
     }
     
@@ -57,6 +69,12 @@ public class GameBean {
             throw new RuntimeException(ex);
         }
     }
+
+    public String getGameId() {
+        return gameId;
+    }
+    
+    
     
     public Board getBoard() {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
@@ -66,3 +84,4 @@ public class GameBean {
     }
     
 }
+

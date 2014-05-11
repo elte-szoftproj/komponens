@@ -5,7 +5,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Playing the game</title>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     </h:head>
     
     <h:body>
@@ -28,7 +29,7 @@
             <ui:repeat var="row" value="#{GameBean.board.pieces}" varStatus="status">
                 <tr class="row-#{status.index}">
                     <ui:repeat var="cell" value="#{row}" varStatus="cellStatus">
-                        <td style="#{cell.styleOverride}" class="#{cell.cssClass} col-#{cellStatus.index}">
+                        <td style="#{cell.styleOverride}" class="#{cell.cssClass} col-#{cellStatus.index}" data-col="#{cellStatus.index}" data-row="#{status.index}">
                             #{cell.content}
                         </td>
                     </ui:repeat>
@@ -39,7 +40,15 @@
         <p>Exception message: ${exception.message}</p>
 <p>Exception cause: ${exception.cause}</p>
     </h:body>
-    
+    <script>
+        $(document).ready(function() {
+           $('.clickable').click(function() {
+              var col = ($(this).data('col')); 
+              var row = ($(this).data('row')); 
+              document.location.href = '?id=#{GameBean.gameId}' + '&amp;clickR=' + row + '&amp;clickC=' + col;
+           }) ;
+        });
+    </script>
     
 </html>
 

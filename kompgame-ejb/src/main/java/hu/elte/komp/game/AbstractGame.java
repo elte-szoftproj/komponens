@@ -70,5 +70,10 @@ public abstract class AbstractGame implements GameInterface, GameGraphInterface 
     }
 
     protected abstract String createBoard();
+
+    public GameService getGameService() {
+        return gameService;
+    }
+    
     
 }

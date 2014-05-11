@@ -9,6 +9,8 @@ package hu.elte.komp.kompgame.game.kamisado;
 import hu.elte.komp.game.Board;
 import hu.elte.komp.game.Position;
 import hu.elte.komp.game.SimplePiece;
+import hu.elte.komp.model.Game;
+import hu.elte.komp.model.GameState;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -102,10 +104,13 @@ public class BoardHelper {
         String str;
         
         boolean endTurn;
+        
+        GameState nextState;
 
-        public MoveResult(String str, boolean endTurn) {
+        public MoveResult(String str, boolean endTurn, GameState nextState) {
             this.str = str;
             this.endTurn = endTurn;
+            this.nextState = nextState;
         }
     }
     
@@ -126,7 +131,7 @@ public class BoardHelper {
         SimplePiece p = (SimplePiece) b.getPieces()[pos.getY()][pos.getX()];
         
         if (!p.isClickable()) {
-            return new MoveResult(s, false);
+            return new MoveResult(s, false, null);
         }
         
         if (c == ' ') {
@@ -135,9 +140,10 @@ public class BoardHelper {
             s = s.replace(l, ' ');
             StringBuilder sb = new StringBuilder(s);
             sb.setCharAt(pos.getY()*8+pos.getX(), Character.toLowerCase(l));
-            return new MoveResult(sb.toString(), true);
+            // TODO: check end condition
+            return new MoveResult(sb.toString(), true, isPlayerOne ? GameState.ONGOING_PLAYER2 : GameState.ONGOING_PLAYER1);
         } else {
-            return new MoveResult(s.toLowerCase().replace(c, Character.toUpperCase(c)), false);
+            return new MoveResult(s.toLowerCase().replace(c, Character.toUpperCase(c)), false, null);
         }
         
     }

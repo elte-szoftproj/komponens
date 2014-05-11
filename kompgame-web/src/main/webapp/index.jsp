@@ -12,6 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Ketszemelyes jatekok</h1>
+        <a href="/kompgame-web/faces/user/Create.xhtml">Register</a><br />
+        <a href="/kompgame-web/faces/secure/gamelist.xhtml">Game list / New game</a>
     </body>
 </html>

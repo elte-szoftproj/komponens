@@ -64,6 +64,12 @@ public class GameBean {
         return (gs == GameState.PLAYER1_WON || gs == GameState.PLAYER2_WON || gs == GameState.STALEMATE);
     }
     
+    public boolean waitingForSomebody() {
+        Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+        
+        return !isOver() && !getGame().getEntityInfo().isCurrentPlayer(principal.getName());
+    }
+    
     public String getStepInfo() {
         GameState gs = getGame().getEntityInfo().getGameState();
         

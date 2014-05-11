@@ -59,6 +59,18 @@ public class GameService {
         return found.get(0);
     }
     
+    public List<Game> findWaitingGames() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Game> cq = cb.createQuery(Game.class);
+        Root<Game> rootEntry = cq.from(Game.class);
+        CriteriaQuery<Game> all;
+        all = cq.select(rootEntry).where(cb.equal(rootEntry.get("gameState"), GameState.WAITING));
+        TypedQuery<Game> allQuery = em.createQuery(all);
+        List<Game> found = allQuery.getResultList();
+        
+        return found;
+    }
+    
     public GameInterface findGameInterfaceByName(String name) {
         GameType gt = findGameTypeByName(name);
         if (gt == null) {

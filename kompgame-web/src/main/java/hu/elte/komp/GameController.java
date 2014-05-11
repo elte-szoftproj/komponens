@@ -72,4 +72,35 @@ public class GameController implements Serializable {
          
         return "/secure/game.xhtml?faces-redirect=true&id=" + g.getId();
     }
+    
+    public String createHuman() {
+        Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+        
+        GameInterface gi = gameService.findGameInterfaceByName("kamisado");
+        
+        Game g = gi.createGame(principal.getName());
+        gameService.updateGame(g);
+         
+        return "/secure/game.xhtml?faces-redirect=true&id=" + g.getId();
+    }
+    
+    public List<Game> getWaitingGames() {
+        return gameService.findWaitingGames();
+    }
+    
+    public String joinGame(Game g) {
+        if (g.getGameState() != GameState.WAITING) {
+            return "";
+        }
+        Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+        if (g.getPlayer1().equals("hu:"+principal.getName())) {
+            // can't join your own game
+            return "";
+        }
+        g.setPlayer2("hu:" + principal.getName());
+        g.setGameState(GameState.ONGOING_PLAYER1);
+        gameService.updateGame(g);
+        
+        return "/secure/game.xhtml?faces-redirect=true&id=" + g.getId();
+    }
 }

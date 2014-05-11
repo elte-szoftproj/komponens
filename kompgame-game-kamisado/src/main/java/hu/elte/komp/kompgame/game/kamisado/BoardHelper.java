@@ -131,19 +131,17 @@ public class BoardHelper {
     }
     
     static MoveResult clickOn(String s, Position pos, boolean isPlayerOne) {
-        if (!isPlayerOne) {
-            // reverse the lines, upward direction is to the top!
-            String[] reva = splitStringEvery(s, 8);
-            ArrayUtils.reverse(reva);
-            s = StringUtils.join(reva, "");
-        }
+
+        int chpos = isPlayerOne? pos.getY()*8+pos.getX() : (7-pos.getY())*8+pos.getX();
+        int cy = pos.getY();
+        int cx = pos.getX();
         
-        char c = s.charAt(pos.getY()*8+pos.getX());
+        char c = s.charAt(chpos);
         
         Position largePos = new Position(-1,-1);
         Board b = getBoardForString(s, isPlayerOne, largePos);
                 
-        SimplePiece p = (SimplePiece) b.getPieces()[pos.getY()][pos.getX()];
+        SimplePiece p = (SimplePiece) b.getPieces()[cy][cx];
         
         if (!p.isClickable()) {
             return new MoveResult(s, false, null);
@@ -151,10 +149,11 @@ public class BoardHelper {
         
         if (c == ' ') {
             // move upcase there as downcase
-            char l = s.charAt(largePos.getY()*8+largePos.getX());
+            int lpos = isPlayerOne? largePos.getY()*8+largePos.getX() : (7-largePos.getY())*8+largePos.getX();
+            char l = s.charAt(lpos);
             s = s.replace(l, ' ');
             StringBuilder sb = new StringBuilder(s);
-            sb.setCharAt(pos.getY()*8+pos.getX(), Character.toLowerCase(l));
+            sb.setCharAt(chpos, Character.toLowerCase(l));
             // TODO: check end condition
             GameState gs = getWinningState(sb.toString());
             if (gs != null) {
@@ -190,7 +189,7 @@ public class BoardHelper {
                 sp.setBackgroundColor(colorToString(colorMap[iy][ix]));
                 
                 if (c != ' ') {
-                    if (c < 'i') {
+                    if ((c < 'i' && c > 'Z') || (c >= 'A' && c < 'I')) {
                         sp.setContent("◉");
                         if (!Character.isUpperCase(c) && isPlayerOne) { sp.setIsClickable(true); }
                     } else {
@@ -202,7 +201,7 @@ public class BoardHelper {
                     sp.setContent("");
                 }
                 
-                if (Character.isUpperCase(c)) {
+                if (Character.isUpperCase(c) && (c >= 'I' ^ isPlayerOne)) {
                     active.setX(ix);
                     active.setY(iy);
                     sp.setStyleOverride("border-color: #f00;");
@@ -213,29 +212,33 @@ public class BoardHelper {
         }
         
         if (active.getX() != -1) {
-            int d = 0;
-            boolean stopLeft = false, stopUp = false, stopRight = false;
-            for (int i = active.getY() - 1 ; i >= 0 ; i--) {
-                d++;
-                if (active.getX() - d >= 0 && !stopLeft) {
-                    SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX() - d];
-                    if (!p.getContent().equals("")) { stopLeft = true; } else {
-                        p.setStyleOverride("border-color: cyan; ");
-                        p.setIsClickable(true);
+            
+            char act = s.charAt(active.getY()*8+active.getY());
+            if (isPlayerOne || act >= 'I') {
+                int d = 0;
+                boolean stopLeft = false, stopUp = false, stopRight = false;
+                for (int i = active.getY() - 1 ; i >= 0 ; i--) {
+                    d++;
+                    if (active.getX() - d >= 0 && !stopLeft) {
+                        SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX() - d];
+                        if (!p.getContent().equals("")) { stopLeft = true; } else {
+                            p.setStyleOverride("border-color: cyan; ");
+                            p.setIsClickable(true);
+                        }
                     }
-                }
-                if (active.getX() + d <= 7 && ! stopRight) {
-                    SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX() + d];
-                    if (!p.getContent().equals("")) { stopRight = true; } else {
-                        p.setStyleOverride("border-color: cyan; ");
-                        p.setIsClickable(true);
+                    if (active.getX() + d <= 7 && ! stopRight) {
+                        SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX() + d];
+                        if (!p.getContent().equals("")) { stopRight = true; } else {
+                            p.setStyleOverride("border-color: cyan; ");
+                            p.setIsClickable(true);
+                        }
                     }
-                }
-                if (!stopUp) {
-                    SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX()];
-                    if (!p.getContent().equals("")) { stopUp  = true; } else {
-                        p.setStyleOverride("border-color: cyan; ");
-                        p.setIsClickable(true);
+                    if (!stopUp) {
+                        SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX()];
+                        if (!p.getContent().equals("")) { stopUp  = true; } else {
+                            p.setStyleOverride("border-color: cyan; ");
+                            p.setIsClickable(true);
+                        }
                     }
                 }
             }

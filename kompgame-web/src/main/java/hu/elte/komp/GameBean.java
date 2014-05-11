@@ -41,7 +41,7 @@ public class GameBean {
     
     public GameInterface getGame() {
         if (game == null) {
-            setGameId(Integer.parseInt(gameId));
+            setGameId(Long.parseLong(gameId));
         }
         return game;
     }
@@ -51,6 +51,7 @@ public class GameBean {
         try {
             ic = new InitialContext();
             game = (GameInterface) ic.lookup("java:app/kompgame-game-kamisado-1.0-SNAPSHOT/hu.elte.komp.kamisado");
+            game.loadGameId(id);
         } catch (NamingException ex) {
             Logger.getLogger(GameBean.class.getName()).log(Level.SEVERE, null, ex);
             throw new RuntimeException(ex);
@@ -59,7 +60,9 @@ public class GameBean {
     
     public Board getBoard() {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-        return getGame().getCurrentBoard("hu:" + principal.getName());
+        GameInterface g = getGame();
+        Board b = g.getCurrentBoard("hu:" + principal.getName());
+        return b; 
     }
     
 }

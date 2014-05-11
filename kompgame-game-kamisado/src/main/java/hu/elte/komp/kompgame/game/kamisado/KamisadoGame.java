@@ -30,7 +30,8 @@ public class KamisadoGame extends AbstractGame {
     @Override
     public Board getCurrentBoard(String player) {
         Game g = getEntityInfo();
-        return BoardHelper.getBoardForString(g.getBoardInfo(), g.isFirstPlayer(player));
+        String boardInfo = g.getBoardInfo();
+        return BoardHelper.getBoardForString(boardInfo, g.isFirstPlayer(player));
     }
 
     @Override

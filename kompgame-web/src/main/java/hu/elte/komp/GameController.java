@@ -68,7 +68,7 @@ public class GameController implements Serializable {
         Game g = gi.createGame(principal.getName());
         g.setPlayer2(aiPlayer);
         g.setGameState(GameState.ONGOING_PLAYER1);
-        //gameService.persistGame(g);
+        gameService.updateGame(g);
          
         return "/secure/game.xhtml?faces-redirect=true&id=" + g.getId();
     }

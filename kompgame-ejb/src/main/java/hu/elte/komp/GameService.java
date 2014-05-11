@@ -99,4 +99,8 @@ public class GameService {
     public Set<String> getScoreCalculatorNames(String name) {
         return findGameInterfaceByName(name).getScoreCalculators();
     }
+
+    public void updateGame(Game g) {
+        em.merge(g);
+    }
 }

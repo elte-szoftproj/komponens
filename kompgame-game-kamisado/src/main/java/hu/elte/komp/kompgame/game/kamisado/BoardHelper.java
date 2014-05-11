@@ -25,6 +25,21 @@ import org.apache.commons.lang.StringUtils;
  * @author Zsolt
  */
 public class BoardHelper {
+
+    static GameState getWinningState(String board) {
+        // TODO: patt implementalasa
+        
+        for (int i=0;i<8;i++) {
+            if (board.charAt(i) >= 'a' && board.charAt(i) <= 'h') {
+                return GameState.PLAYER1_WON;
+            }
+            if (board.charAt(63-i) >= 'i' && board.charAt(63-i) <= 'p') {
+                return GameState.PLAYER1_WON;
+            }
+        }
+        
+        return null;
+    }
    
     enum Color {
         ORANGE, BLUE, PURPLE, PINK, YELLOW, RED, GREEN, BROWN
@@ -141,6 +156,10 @@ public class BoardHelper {
             StringBuilder sb = new StringBuilder(s);
             sb.setCharAt(pos.getY()*8+pos.getX(), Character.toLowerCase(l));
             // TODO: check end condition
+            GameState gs = getWinningState(sb.toString());
+            if (gs != null) {
+                return new MoveResult(sb.toString(), true, gs);
+            }
             return new MoveResult(sb.toString(), true, isPlayerOne ? GameState.ONGOING_PLAYER2 : GameState.ONGOING_PLAYER1);
         } else {
             return new MoveResult(s.toLowerCase().replace(c, Character.toUpperCase(c)), false, null);
@@ -196,7 +215,7 @@ public class BoardHelper {
         if (active.getX() != -1) {
             int d = 0;
             boolean stopLeft = false, stopUp = false, stopRight = false;
-            for (int i = active.getY() - 1 ; i > 0 ; i--) {
+            for (int i = active.getY() - 1 ; i >= 0 ; i--) {
                 d++;
                 if (active.getX() - d >= 0 && !stopLeft) {
                     SimplePiece p = (SimplePiece) b.getPieces()[i][active.getX() - d];

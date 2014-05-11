@@ -9,6 +9,7 @@ package hu.elte.komp;
 import hu.elte.komp.game.Board;
 import hu.elte.komp.game.GameInterface;
 import hu.elte.komp.game.Position;
+import hu.elte.komp.model.GameState;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,6 +56,26 @@ public class GameBean {
         }
         
         //getGame();
+    }
+    
+    public boolean isOver() {
+        GameState gs = getGame().getEntityInfo().getGameState();
+        
+        return (gs == GameState.PLAYER1_WON || gs == GameState.PLAYER2_WON || gs == GameState.STALEMATE);
+    }
+    
+    public String getStepInfo() {
+        GameState gs = getGame().getEntityInfo().getGameState();
+        
+        switch (gs) {
+            case ONGOING_PLAYER1: return "Player 1 kovetkezik";
+            case ONGOING_PLAYER2: return "Player 2 kovetkezik";
+            case PLAYER1_WON: return "Player 1 nyert";
+            case PLAYER2_WON: return "Player 2 nyert";
+            case STALEMATE: return "Dontetlen";
+            case WAITING: return "Varakozas egy masik jatekosra";
+        }
+        return "";
     }
     
     public GameInterface getGame() {

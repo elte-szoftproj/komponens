@@ -41,8 +41,8 @@ public class KamisadoGame extends AbstractGame {
         
         Game g = getEntityInfo();
         
-        if (!player.equals(g.getCurrentPlayer())) {
-            // we can't do anything if we are not the current player
+        if (!player.equals(g.getCurrentPlayer()) || (g.getGameState() != GameState.ONGOING_PLAYER1 && g.getGameState() != GameState.ONGOING_PLAYER2)) {
+            // we can't do anything if we are not the current player, or if the game ended
             return;
         }
         
@@ -107,6 +107,10 @@ public class KamisadoGame extends AbstractGame {
             throw new RuntimeException("Invalid argument! " + step.getClass().toString());
         }
         final KamisadoAiIterator.StepInfo si = (KamisadoAiIterator.StepInfo) step;
+        GameState gs = BoardHelper.getWinningState(si.getBoard());
+        if (gs != null) {
+            g.setGameState(gs);
+        }
         g.setBoardInfo(si.getBoard());
     }
 

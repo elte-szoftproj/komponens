@@ -17,8 +17,9 @@ public interface AiInterface {
      * az AI feladja.
      * 
      * @param gameGraph
+     * @param youArePlayerOne igaz ha az AI-val lepo jatek az elso jatekos
      * @return 
      */
-    public Object getNextStep(GameGraphInterface gameGraph);
+    public Object getNextStep(GameGraphInterface gameGraph, boolean youArePlayerOne);
     
 }

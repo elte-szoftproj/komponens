@@ -18,7 +18,7 @@ import javax.ejb.LocalBean;
 public class RandomAi implements AiInterface {
 
     @Override
-    public Object getNextStep(GameGraphInterface gameGraph) {
+    public Object getNextStep(GameGraphInterface gameGraph, boolean youArePlayerOne) {
         
         int i = 0;
         int lookfor = (int)(Math.random() * 20);
@@ -26,7 +26,7 @@ public class RandomAi implements AiInterface {
         for(Object o: gameGraph.getPossibleSteps(gameGraph.getCurrentStep())) {
             i++;
             // nop, just to the if it works
-            gameGraph.getStepScoreForCurrentPlayer(o);
+            gameGraph.getStepScoreForPlayer(o, youArePlayerOne);
             if (i == lookfor) {
                 return o;
             }

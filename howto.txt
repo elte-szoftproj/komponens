@@ -1,8 +1,10 @@
 - Netbeans + Glassfish telepit (Netbeans J2EE csomagban minden benne van)
+- Projekt betolt
+- Hogy a fuggosegeket letotlse, lehet kell egy build with dependencies az -ear-on
 - Mysql feltelepit (vagy lehet csinalni akar derbyvel is igazabol...)
 - hozzatok letre egy adatbazist
 - A rootban levo mysql-connector-java.zipbol a jart masoljatok be a glassfish/glassfish/lib konyvtarba
-- Glassfish / app elindit (pl. netbeansbol)
+- Glassfish / app elindit (pl. netbeansbol) (-ear -t kell elinditani)
 - Glassfish admin behoz (localhost:4848)
 - resources -> JDBC -> connection pools -> new pool
 	nev: jdbc-kompdb

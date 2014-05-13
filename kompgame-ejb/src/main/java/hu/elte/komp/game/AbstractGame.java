@@ -42,9 +42,14 @@ public abstract class AbstractGame implements GameInterface, GameGraphInterface 
      * @return 
      */
     @Override
-    public long getStepScoreForCurrentPlayer(Object step) {
-        // TODO
-        return 0;
+    public long getStepScoreForPlayer(Object step, boolean forPlayerOne) {
+        if (!getEntityInfo().isCurrentPlayerAi()) {
+            return 0;
+        }
+        String[] p = getEntityInfo().getCurrentPlayerName().split("|");
+        
+        ScoreCalculator sc = getScoreCalculator(p[1]);
+        return sc.getScoreForStep(step);
     }
 
     @Override

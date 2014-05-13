@@ -75,7 +75,7 @@ public class KamisadoGame extends AbstractGame {
             ic = new InitialContext();
             AiInterface ai = (AiInterface) ic.lookup(at.getUrl());
             try {
-                Object step = ai.getNextStep(this);
+                Object step = ai.getNextStep(this, false);
                 if (step == null) {
                     g.setGameState(GameState.PLAYER1_WON);
                 } else {

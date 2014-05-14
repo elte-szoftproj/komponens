@@ -34,11 +34,14 @@ public class GameController implements Serializable {
     GameService gameService;
         
     private static final long serialVersionUID = 1L;
+    private final String gameTypeName;
     
     /**
      * Creates a new instance of GameController
      */
     public GameController() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        this.gameTypeName = facesContext.getExternalContext().getRequestParameterMap().get("game");
         gc = null;
     }
     
@@ -55,7 +58,7 @@ public class GameController implements Serializable {
     }
     
     public Set<String> getScoreTypes() {
-        return gameService.getScoreCalculatorNames("kamisado");
+        return gameService.getScoreCalculatorNames(gameTypeName);
     }
     
     public String create() {
@@ -63,7 +66,7 @@ public class GameController implements Serializable {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         String aiPlayer = "ai:" + gc.getAiName() + "|" + gc.getAiScoreCalculator();
         
-        GameInterface gi = gameService.findGameInterfaceByName("kamisado");
+        GameInterface gi = gameService.findGameInterfaceByName(gameTypeName);
         
         Game g = gi.createGame(principal.getName());
         g.setPlayer2(aiPlayer);
@@ -76,7 +79,7 @@ public class GameController implements Serializable {
     public String createHuman() {
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         
-        GameInterface gi = gameService.findGameInterfaceByName("kamisado");
+        GameInterface gi = gameService.findGameInterfaceByName(gameTypeName);
         
         Game g = gi.createGame(principal.getName());
         gameService.updateGame(g);
@@ -99,6 +102,7 @@ public class GameController implements Serializable {
         }
         g.setPlayer2("hu:" + principal.getName());
         g.setGameState(GameState.ONGOING_PLAYER1);
+        g.setTypeName(gameTypeName);
         gameService.updateGame(g);
         
         return "/secure/game.xhtml?faces-redirect=true&id=" + g.getId();

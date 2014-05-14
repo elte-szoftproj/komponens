@@ -4,12 +4,20 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Create Game</title>
+        <title>Create Game</title>        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript">
+            $.urlParam = function(name){
+                var results = new RegExp('[\\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+                return results[1] || 0;
+            };
+        </script>
+
     </h:head>
     <h:body>
         <h1>Create Game</h1>
-        <h:form>
+        <h:form prependId="false">
             <h1>Game Type: #{gameController.gameTypeName}</h1>
+<!--        <h:form prependId="false"> -->
             <h:panelGrid columns="2">
                 
                 
@@ -24,8 +32,9 @@
                 </h:selectOneListbox>
             </h:panelGrid>
             
-            <h:commandButton value="Submit" action="#{gameController.create}" />
-            <h:commandButton value="Create Human game" action="#{gameController.createHuman}" />
+            <h:inputHidden id="gameTypeName" value="#{gameController.gameTypeName}" />
+            <h:commandButton value="Submit" action="#{gameController.create}" onclick="$('#gameTypeName').val($.urlParam('game'));" />
+            <h:commandButton value="Create Human game" action="#{gameController.createHuman}" onclick="$('#gameTypeName').val($.urlParam('game'));" />
         </h:form>
     </h:body>
 </html>

@@ -25,7 +25,7 @@ import javax.inject.Named;
  *
  * @author Zsolt
  */
-@RequestScoped
+@SessionScoped
 @Named(value="gameController")
 public class GameController implements Serializable {
 
@@ -35,10 +35,14 @@ public class GameController implements Serializable {
     GameService gameService;
         
     private static final long serialVersionUID = 1L;
-    private final String gameTypeName;
+    private String gameTypeName;
 
     public String getGameTypeName() {
         return gameTypeName; 
+    }
+    
+    public void setGameTypeName(String gameTypeName) {
+        this.gameTypeName = gameTypeName;
     }
     
     
@@ -65,6 +69,10 @@ public class GameController implements Serializable {
     }
     
     public Set<String> getScoreTypes() {
+        // FIXME: hack!
+        if (FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().containsKey("game"))
+//        if (this.gameTypeName == null) 
+            this.gameTypeName = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("game");
         return gameService.getScoreCalculatorNames(gameTypeName);
     }
     
@@ -72,12 +80,14 @@ public class GameController implements Serializable {
         
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         String aiPlayer = "ai:" + gc.getAiName() + "|" + gc.getAiScoreCalculator();
-        
         GameInterface gi = gameService.findGameInterfaceByName(gameTypeName);
+
+        //GameInterface gi = gameService.findGameInterfaceByName(gc.getGameType());
         
         Game g = gi.createGame(principal.getName());
         g.setPlayer2(aiPlayer);
         g.setGameState(GameState.ONGOING_PLAYER1);
+        g.setTypeName(gameTypeName);
         gameService.updateGame(g);
          
         return "/secure/game.xhtml?faces-redirect=true&id=" + g.getId();

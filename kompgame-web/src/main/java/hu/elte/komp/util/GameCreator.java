@@ -15,6 +15,8 @@ public class GameCreator {
     private String aiName;
     
     private String aiScoreCalculator;
+    
+    private String gameType;
 
     public String getAiName() {
         return aiName;
@@ -30,6 +32,14 @@ public class GameCreator {
 
     public void setAiScoreCalculator(String aiScoreCalculator) {
         this.aiScoreCalculator = aiScoreCalculator;
+    }
+    
+    public String getGameType() {
+        return gameType;
+    }
+    
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
  
 }

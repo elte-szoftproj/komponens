@@ -9,10 +9,13 @@ package hu.elte.komp;
 import hu.elte.komp.game.Board;
 import hu.elte.komp.game.GameInterface;
 import hu.elte.komp.game.Position;
+import hu.elte.komp.model.Game;
 import hu.elte.komp.model.GameState;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -34,6 +37,9 @@ public class GameBean {
     
     GameInterface game;
     
+    @EJB
+    GameService gameService;
+    
     /**
      * Creates a new instance of komp
      */
@@ -42,7 +48,11 @@ public class GameBean {
         this.gameId = facesContext.getExternalContext().getRequestParameterMap().get("id");
         this.clickR = facesContext.getExternalContext().getRequestParameterMap().get("clickR");
         this.clickC = facesContext.getExternalContext().getRequestParameterMap().get("clickC");
-        
+    }
+    
+    // business logic might not be in constructors
+    @PostConstruct
+    public void init() {
         if (clickR != null) {
             int r = Integer.parseInt(clickR);
             int c = Integer.parseInt(clickC);
@@ -92,15 +102,18 @@ public class GameBean {
     }
     
     public void setGameId(long id) {
-        InitialContext ic;
-        try {
-            ic = new InitialContext();
-            game = (GameInterface) ic.lookup("java:app/kompgame-game-kamisado-1.0-SNAPSHOT/hu.elte.komp.kamisado");
-            game.loadGameId(id);
-        } catch (NamingException ex) {
-            Logger.getLogger(GameBean.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RuntimeException(ex);
-        }
+        Game g = gameService.findGameById(id);
+        game = gameService.findGameInterfaceByName(g.getTypeName());
+        game.loadGameId(id);
+//        InitialContext ic;
+//        try {
+//            ic = new InitialContext();
+//            game = (GameInterface) ic.lookup("java:app/kompgame-game-kamisado-1.0-SNAPSHOT/hu.elte.komp.kamisado");
+//            game.loadGameId(id);
+//        } catch (NamingException ex) {
+//            Logger.getLogger(GameBean.class.getName()).log(Level.SEVERE, null, ex);
+//            throw new RuntimeException(ex);
+//        }
     }
 
     public String getGameId() {

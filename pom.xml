@@ -13,5 +13,8 @@
     <module>kompgame-game-kamisado</module>
     <module>kompgame-game-tictactoe</module>
     <module>komponens-ai-random</module>
+    <module>kompgame-ai-negamax</module>
+    <module>kompgame-ai-avg</module>
+    <module>kompgame-game-tictactoe-test</module>
   </modules>
 </project>

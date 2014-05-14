@@ -16,6 +16,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -24,7 +25,7 @@ import javax.inject.Named;
  *
  * @author Zsolt
  */
-@SessionScoped
+@RequestScoped
 @Named(value="gameController")
 public class GameController implements Serializable {
 
@@ -35,6 +36,12 @@ public class GameController implements Serializable {
         
     private static final long serialVersionUID = 1L;
     private final String gameTypeName;
+
+    public String getGameTypeName() {
+        return gameTypeName; 
+    }
+    
+    
     
     /**
      * Creates a new instance of GameController

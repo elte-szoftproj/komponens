@@ -74,7 +74,6 @@ public class KamisadoAiIterator implements Iterator<KamisadoAiIterator.StepInfo>
     public boolean hasNext() {
         // search next item
         while(y < 8) {
-            x = 0;
             while (x < 8) {
                 if (isMyPiece(x, y)) {
                     while (direction < 3) {
@@ -86,18 +85,22 @@ public class KamisadoAiIterator implements Iterator<KamisadoAiIterator.StepInfo>
                         }
                         if (wx >= 0 && wx < 8 && wy >= 0 && wy < 8 && pieceAt(wx, wy) == ' ') {
                             return true;
+                        } else {
+                            position = 0;
+                            direction ++;
                         }
-                        direction ++;
-                        position = 0;
                     }
                 }
                 direction = 0;
+                position = 0;
                 x++;
             }
             y++;
+            x = 0;
         }
-        wx = -1;
-        wy = -1;
+        
+        wx = 56666;
+        wy = 66666;
         return false;
     }
 

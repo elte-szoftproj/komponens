@@ -24,7 +24,7 @@ public class AlfaBetaAiTest {
     AlfaBetaAi ABTest;
     Node gyoker;
     final static int level=3;
-    final static int maxchild=4;
+    final static int maxchild=3;
     
     public AlfaBetaAiTest() {
     }
@@ -77,15 +77,14 @@ public class AlfaBetaAiTest {
     
     private void printRoute(Node nd, String route){
         String rt=route+ " " + nd.score;
-        for (Node n:nd.children){            
-            if (n.children.isEmpty()) {
-                System.out.println(rt);
-                return;
-            }
-            else {
+        if (nd.children.isEmpty()) {
+            System.out.println(rt);
+        }
+        else {
+            for (Node n:nd.children){
                 printRoute(n,rt);
-            }
-        }    
+            }    
+        }
     }
     
     private class Node implements GameGraphInterface {
@@ -113,12 +112,12 @@ public class AlfaBetaAiTest {
 
         @Override
         public Iterable getPossibleSteps(Object step) {
-            return children;
+            return ((Node)step).children;
         }
 
         @Override
         public long getStepScoreForPlayer(Object step, boolean forPlayerOne) {
-            return this.score;
+            return ((Node)step).score;
         }
     }
     

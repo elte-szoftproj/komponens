@@ -6,10 +6,6 @@
 
 package hu.elte.komp.kompgame.game.tictactoe;
 
-/**
- *
- * @author Zsolt
- */
 public class TictactoeBoard {
    
     

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : 2014.05.07., 16:49:58
-    Author     : Zsolt
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

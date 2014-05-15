@@ -45,4 +45,9 @@ public class TicTacToeStateIterator implements Iterator<String> {
     private int countOccurrences(String s, char c) {
         return s.length() - s.replaceAll(String.valueOf(c), "").length();
     }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

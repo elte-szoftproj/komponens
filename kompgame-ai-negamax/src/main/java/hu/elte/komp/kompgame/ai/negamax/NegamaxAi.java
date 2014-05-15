@@ -64,7 +64,7 @@ public class NegamaxAi implements AiInterface {
         for (Node child : children) {
             Long updatedChildScore = -1 * evaluateTree(child);
 //            child.setScore(updatedChildScore);
-            value = Long.max(value, updatedChildScore);
+            value = Math.max(value, updatedChildScore);
 //            System.out.println("new cild: " + updatedChildScore + " | " +value);
         }
         tree.setScore(value);

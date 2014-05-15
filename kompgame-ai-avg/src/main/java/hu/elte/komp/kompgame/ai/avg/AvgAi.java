@@ -4,6 +4,7 @@ import hu.elte.komp.game.AiInterface;
 import hu.elte.komp.game.GameGraphInterface;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -71,7 +72,7 @@ public class AvgAi implements AiInterface {
         // FIXME: hack!!
         int i = 0;
         Long score = 0L;
-        values.sort(new Comparator<Long>() {
+        Collections.sort(values, new Comparator<Long>() {
 
             @Override
             public int compare(Long o1, Long o2) {
@@ -85,7 +86,7 @@ public class AvgAi implements AiInterface {
             }
         });
         if (depth % 2 == 0) {
-            while (i < m) {
+            while (i < m && values.size() < i) {
                 score += values.get(i);
                 values.remove(i);
                 if (values.isEmpty()) {
@@ -93,9 +94,11 @@ public class AvgAi implements AiInterface {
                 }
                 ++i;
             }
-            value /= i;
+            if(i>0) {
+                value /= i;
+            }
         } else {
-            while (i < n) {
+            while (i < n && (values.size() - i - 1) >= 0) {
                 score += values.get(values.size() - i - 1);
                 values.remove(i);
                 if (values.isEmpty()) {
@@ -103,7 +106,9 @@ public class AvgAi implements AiInterface {
                 }
                 ++i;
             }
-            value /= i;
+            if (i>0) {
+                value /= i;
+            }
         }
         
         tree.setScore(value);
@@ -113,7 +118,7 @@ public class AvgAi implements AiInterface {
     private Long maxval(Collection<Long> iterable) {
         Long max = Long.MIN_VALUE;
         for (Long val : iterable) {
-            max = Long.max(max, val);
+            max = Math.max(max, val);
         }
         return max;
     }
@@ -122,7 +127,7 @@ public class AvgAi implements AiInterface {
         
         Long maxScore = Long.MIN_VALUE;
         for (Node child : root.getChildren()) {
-            maxScore = Long.max(maxScore, child.getScore());
+            maxScore = Math.max(maxScore, child.getScore());
         }
         
         for (Node child : root.getChildren()) {

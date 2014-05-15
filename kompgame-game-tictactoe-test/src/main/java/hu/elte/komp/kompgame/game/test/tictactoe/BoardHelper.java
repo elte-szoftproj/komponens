@@ -73,6 +73,10 @@ public class BoardHelper {
         return false;
     }
     
+    public boolean isSlalemate(String board) {
+        return (!board.contains(" ")) ;
+    }
+    
     public String getInitialBoard() {
         // 9 spaces
         return "         ";

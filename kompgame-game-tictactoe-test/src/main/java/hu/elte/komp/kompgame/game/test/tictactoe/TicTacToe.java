@@ -68,6 +68,8 @@ public class TicTacToe extends AbstractGame {
                 } else {
                     game.setGameState(GameState.PLAYER2_WON);
                 }
+            } else if (boardHelper.isSlalemate(updatedBoard)){
+                game.setGameState(GameState.STALEMATE);
             } else {
                 if (gameState == GameState.ONGOING_PLAYER1) {
                     game.setGameState(GameState.ONGOING_PLAYER2);
@@ -98,16 +100,14 @@ public class TicTacToe extends AbstractGame {
                     game.setGameState(GameState.PLAYER1_WON);
                 } else {
                     doStep(game, step);
-                    game.setGameState(GameState.ONGOING_PLAYER1);
                 }
             } catch (Exception e) {
                 game.setGameState(GameState.PLAYER1_WON);
                 throw e;
             }
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             // AI not found :(
-            //g.setGameState(GameState.PLAYER1_WON);
-            throw new RuntimeException(ex);
+            g.setGameState(GameState.PLAYER1_WON);
         }
         
         try {
@@ -177,18 +177,21 @@ public class TicTacToe extends AbstractGame {
     }
     final String board = (String) step;
     GameState gameState = game.getGameState();
-//    if (boardHelper.isWinningState(board)) {
-//        if (gameState == GameState.ONGOING_PLAYER1) {
-//            gameState = GameState.PLAYER1_WON;
-//        } else {
-//            gameState = GameState.PLAYER2_WON;
-//        } 
-//    } else if (gameState == GameState.ONGOING_PLAYER1) {
-//        gameState = GameState.ONGOING_PLAYER2;
-//    } else {
-//        gameState = GameState.ONGOING_PLAYER1;
-//    }
-    game.setGameState(gameState);
+    if (boardHelper.isWinningState(board)) {
+                if (gameState == GameState.ONGOING_PLAYER1) {
+                    game.setGameState(GameState.PLAYER1_WON);
+                } else {
+                    game.setGameState(GameState.PLAYER2_WON);
+                }
+    } else if (boardHelper.isSlalemate(board)){
+                game.setGameState(GameState.STALEMATE);
+    } else {
+                if (gameState == GameState.ONGOING_PLAYER1) {
+                    game.setGameState(GameState.ONGOING_PLAYER2);
+                } else {
+                    game.setGameState(GameState.ONGOING_PLAYER1);
+                }
+    }
     game.setBoardInfo(board);
 }
     

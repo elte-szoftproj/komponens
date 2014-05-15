@@ -6,10 +6,6 @@
 
 package hu.elte.komp.game;
 
-/**
- *
- * @author Zsolt
- */
 interface Piece {
     
     public boolean isClickable();

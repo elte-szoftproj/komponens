@@ -12,10 +12,6 @@ import hu.elte.komp.model.GameState;
 import java.util.Date;
 import javax.ejb.EJB;
 
-/**
- *
- * @author Zsolt
- */
 public abstract class AbstractGame implements GameInterface, GameGraphInterface {
 
 

@@ -10,10 +10,6 @@ import hu.elte.komp.game.Board;
 import java.util.Iterator;
 import sun.security.action.GetBooleanAction;
 
-/**
- *
- * @author Zsolt
- */
 public class KamisadoAiIterator implements Iterator<KamisadoAiIterator.StepInfo> {
 
     public static class StepInfo {
@@ -72,10 +68,13 @@ public class KamisadoAiIterator implements Iterator<KamisadoAiIterator.StepInfo>
     
     @Override
     public boolean hasNext() {
+        
+        char next = BoardHelper.nextMoveCharacter(b, playerOne);
+ 
         // search next item
         while(y < 8) {
             while (x < 8) {
-                if (isMyPiece(x, y)) {
+                if (isMyPiece(x, y) && (next == ' ' || pieceAt(x,y) == next)) {
                     while (direction < 3) {
                         position++;
                         switch (direction) {
@@ -107,11 +106,17 @@ public class KamisadoAiIterator implements Iterator<KamisadoAiIterator.StepInfo>
     @Override
     public StepInfo next() {
         newBoard.replace(0, 64, b);
+        if (newBoard.length() > 65) {
+            newBoard.replace(64, newBoard.length(), "");
+        }
         if (playerOne) {
             newBoard.replace(wy*8+wx, wy*8+wx+1, Character.toString(b.charAt(y*8+x)));
+            newBoard.replace(64, 65, Character.toString(b.charAt(y*8+x))); // last moved char
             newBoard.replace(y*8+x, y*8+x+1, " ");
+            
         } else {
             newBoard.replace(63-(wy*8+wx), 63-(wy*8+wx)+1, Character.toString(b.charAt(63-(y*8+x))));
+            newBoard.replace(64, 65, Character.toString(b.charAt(63-(y*8+x)))); // last moved char
             newBoard.replace(63-(y*8+x), 63-(y*8+x)+1, " ");
         }
         return new StepInfo(newBoard.toString(), !playerOne);

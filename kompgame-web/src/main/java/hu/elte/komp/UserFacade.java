@@ -11,10 +11,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Zsolt
- */
 @Stateless
 public class UserFacade extends AbstractFacade<User> {
     @PersistenceContext(unitName = "hu.elte.komp_kompgame-pu")

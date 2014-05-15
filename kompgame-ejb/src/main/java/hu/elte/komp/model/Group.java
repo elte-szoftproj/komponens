@@ -19,10 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-/**
- *
- * @author Zsolt
- */
 @Entity
 @Table(name = "GROUPS")
 public class Group implements Serializable {

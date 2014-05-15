@@ -6,10 +6,6 @@
 
 package hu.elte.komp.game;
 
-/**
- *
- * @author Zsolt
- */
 public interface ScoreCalculator {
     
     public long getScoreForStep(Object step);

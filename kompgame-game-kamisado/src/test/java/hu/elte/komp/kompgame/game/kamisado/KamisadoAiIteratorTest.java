@@ -27,7 +27,7 @@ public class KamisadoAiIteratorTest {
                 "        " +
                 "        " +
                 "        " +
-                "abcdefgh", false);
+                "abcdefgh ", false);
     }
 
     // TODO add test methods here.

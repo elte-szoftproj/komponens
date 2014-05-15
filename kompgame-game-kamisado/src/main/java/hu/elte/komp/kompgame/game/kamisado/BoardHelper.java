@@ -68,6 +68,20 @@ public class BoardHelper {
         
         return "";
     }
+    static char colorToChar(Color color, boolean isPlayerOne) {
+        switch(color) {
+            case ORANGE: return isPlayerOne ? 'h' : 'i';
+            case RED: return isPlayerOne ? 'c' : 'n';
+            case GREEN: return isPlayerOne ? 'b' : 'o';
+            case PINK: return isPlayerOne ? 'e' : 'l';
+            case YELLOW: return isPlayerOne ? 'd' : 'm';
+            case BLUE: return isPlayerOne ? 'g' : 'j';
+            case PURPLE: return isPlayerOne ? 'f' : 'k';
+            case BROWN: return isPlayerOne ? 'a' : 'p';
+        }
+        
+        return ' ';
+    }
     
     static Color charToColor(char c) {
         switch (Character.toLowerCase(c)) {
@@ -110,7 +124,8 @@ public class BoardHelper {
                 "        " +
                 "        " +
                 "        " +
-                "abcdefgh"
+                "abcdefgh" +
+                " "
                 ;
     }
     
@@ -127,7 +142,7 @@ public class BoardHelper {
             this.nextState = nextState;
         }
     }
-    
+        
     static MoveResult clickOn(String s, Position pos, boolean isPlayerOne) {
 
         int chpos = isPlayerOne? pos.getY()*8+pos.getX() : (7-pos.getY())*8+pos.getX();
@@ -152,6 +167,10 @@ public class BoardHelper {
             s = s.replace(l, ' ');
             StringBuilder sb = new StringBuilder(s);
             sb.setCharAt(chpos, Character.toLowerCase(l));
+            
+            // set last moved as character
+            sb.setCharAt(64, Character.toLowerCase(l));
+            
             // TODO: check end condition
             GameState gs = getWinningState(sb.toString());
             if (gs != null) {
@@ -163,6 +182,21 @@ public class BoardHelper {
         }
         
     }
+    
+    static char nextMoveCharacter(String board, boolean isPlayerOne) {
+        char lastMoved = board.charAt(64);
+        
+        if (lastMoved == ' ') {
+            return ' ';
+        }
+        
+        int pos = board.indexOf(lastMoved);
+        
+        int line = pos / 8;
+        int offset = pos % 8;
+        
+        return colorToChar(colorMap[line][offset], isPlayerOne);
+    }
 
     static Board getBoardForString(String s, boolean isPlayerOne) {
         return getBoardForString(s, isPlayerOne, new Position(-1,-1));
@@ -170,6 +204,8 @@ public class BoardHelper {
     
     static Board getBoardForString(String s, boolean isPlayerOne, Position active) {
         Board b = new Board(8,8);
+        
+        char next = nextMoveCharacter(s, isPlayerOne);
         
         
         if (!isPlayerOne) {
@@ -189,10 +225,10 @@ public class BoardHelper {
                 if (c != ' ') {
                     if ((c < 'i' && c > 'Z') || (c >= 'A' && c < 'I')) {
                         sp.setContent("◉");
-                        if (!Character.isUpperCase(c) && isPlayerOne) { sp.setIsClickable(true); }
+                        if (!Character.isUpperCase(c) && isPlayerOne && (next == c || next == ' ')) { sp.setIsClickable(true); }
                     } else {
                         sp.setContent("◈");
-                        if (!Character.isUpperCase(c) && !isPlayerOne) { sp.setIsClickable(true); }
+                        if (!Character.isUpperCase(c) && !isPlayerOne && (next == c || next == ' ')) { sp.setIsClickable(true); }
                     }
                     sp.setTextColor(colorToString(charToColor(c)));
                 } else {

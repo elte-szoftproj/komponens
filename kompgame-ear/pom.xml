@@ -60,6 +60,18 @@
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
+		<dependency>
+            <groupId>hu.elte.komp</groupId>
+            <artifactId>komponens-ai-alfabeta</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
+		<dependency>
+            <groupId>hu.elte.komp</groupId>
+            <artifactId>komponens-ai-minimax</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
         <dependency>
             <groupId>hu.elte.komp</groupId>
             <artifactId>komponens-ai-random</artifactId>

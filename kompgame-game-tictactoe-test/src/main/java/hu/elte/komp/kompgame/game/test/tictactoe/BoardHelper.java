@@ -28,7 +28,7 @@ public class BoardHelper {
             }
         }
         
-        if (needsFlip) {
+        if (true) {
             Board tmp = board;
             board = new Board(3, 3);
             

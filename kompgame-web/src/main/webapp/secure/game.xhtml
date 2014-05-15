@@ -7,7 +7,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Playing the game</title>
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <h:outputScript name="jquery.min.js" />
         
         <c:if test="#{GameBean.waitingForSomebody()==true}">
             <meta http-equiv="refresh" content="3; url = ?id=#{GameBean.gameId}" />

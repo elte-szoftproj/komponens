@@ -25,9 +25,9 @@ public class TictactoeBoard {
         w = Integer.parseInt(a[0]);
         h = Integer.parseInt(a[1]);
         board = new int[h][w];
-        for(int iy=1;iy<h;iy++) {
-            for(int ix=1;ix<h;ix++) {
-                board[iy][ix] = Integer.parseInt(a[2].charAt(iy*h+ix)+"");
+        for(int iy=0;iy<h;iy++) {
+            for(int ix=0;ix<w;ix++) {
+                board[iy][ix] = Integer.parseInt(a[2].charAt(iy*w+ix)+"");
             }
         }
         
@@ -48,14 +48,15 @@ public class TictactoeBoard {
     public TictactoeBoard(TictactoeBoard base, int x, int y, int v) {
         w = base.w;
         h = base.h;
-        int dx = 0;
-        int dy = 0;
+        int dx = 0; int rx = 0;
+        int dy = 0; int ry = 0;
         if (x == 0) {
             w++;
             dx = 1;
         }
         if (x == w+1) {
             w++;
+            rx++;
         }
         if (y == 0) {
             h++;
@@ -63,11 +64,14 @@ public class TictactoeBoard {
         }
         if (y == h+1) {
             h++;
+            ry++;
         }
+        if (dy != 1) y--;
+        if (dx != 1) x--;
         board = new int[h][w];
-        for(int iy=1;iy<h-dx;iy++) {
-            for(int ix=1;ix<h-dx;ix++) {
-                board[iy+dx][ix+dx] = base.board[iy][ix];
+        for(int iy=0;iy<h-dy-ry;iy++) {
+            for(int ix=0;ix<w-dx-rx;ix++) {
+                board[iy+dy][ix+dx] = base.board[iy][ix];
             }
         }
         if (board[y][x] != 0) {
@@ -92,8 +96,8 @@ public class TictactoeBoard {
         
         ret.append(w).append(":");
         ret.append(h).append(":");
-        for(int iy=1;iy<h;iy++) {
-            for(int ix=1;ix<h;ix++) {
+        for(int iy=0;iy<h;iy++) {
+            for(int ix=0;ix<w;ix++) {
                 ret.append(board[iy][ix]);
             }
         }
@@ -102,17 +106,18 @@ public class TictactoeBoard {
     }
 
     private void calculateScores() {
-        for(int iy=1;iy<h;iy++) {
-            for(int ix=1;ix<h;ix++) {
-                if (board[iy][ix] == 2) {
-                    int tmp = calculateScoreAt(ix, iy);
-                    if (tmp > score2) {
-                        score2 = tmp;
-                    }
-                }
+        score1 = 0; score2 = 0;
+        for(int iy=0;iy<h;iy++) {
+            for(int ix=0;ix<w;ix++) {
                 if (board[iy][ix] == 1) {
                     int tmp = calculateScoreAt(ix, iy);
                     if (tmp > score1) {
+                        score1 = tmp;
+                    }
+                }
+                if (board[iy][ix] == 2) {
+                    int tmp = calculateScoreAt(ix, iy);
+                    if (tmp > score2) {
                         score2 = tmp;
                     }
                 }
@@ -124,15 +129,12 @@ public class TictactoeBoard {
         
         int d1 = 1;
         while(ix+d1 < w && board[iy][ix+d1] == board[iy][ix]) { d1++; }
-        if (board[iy][ix+d1] != board[iy][ix]) { d1--; }
         
         int d2 = 1;
         while(iy+d2 < h && board[iy+d2][ix] == board[iy][ix]) { d2++; }
-        if (board[iy+d2][ix] != board[iy][ix]) { d2--; }
         
         int d3 = 1;
-        while(iy+d3 < h && ix+d3 < w && board[iy+d3][ix+d3] == board[iy][ix]) { d2++; }
-        if (board[iy+d3][ix+d3] != board[iy][ix]) { d3--; }
+        while(iy+d3 < h && ix+d3 < w && board[iy+d3][ix+d3] == board[iy][ix]) { d3++; }
         
         return Math.max(Math.max(d1, d2), d3);
     }

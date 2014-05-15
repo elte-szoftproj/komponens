@@ -75,6 +75,13 @@ public class BoardHelper {
         try {
             TictactoeBoard clickedBoard = new TictactoeBoard(tb, pos.getX(), pos.getY(), isPlayerOne? 1 : 2);
             
+            if (clickedBoard.score1 >= 5) {
+                return new MoveResult(clickedBoard.toString(), GameState.PLAYER1_WON);
+            }
+            if (clickedBoard.score2 >= 5) {
+                return new MoveResult(clickedBoard.toString(), GameState.PLAYER2_WON);
+            }
+            
             return new MoveResult(clickedBoard.toString(), isPlayerOne ? GameState.ONGOING_PLAYER2 : GameState.ONGOING_PLAYER1);
         } catch (Exception e) {
             return new MoveResult(s, null);
@@ -87,19 +94,23 @@ public class BoardHelper {
         
         Board b = new Board(tb.w+2,tb.h+2);
         
-        for (int iy=0;iy<tb.w+2;iy++) {
-            for (int ix=0;ix<tb.h+2;ix++) {
+        for (int iy=0;iy<tb.h+2;iy++) {
+            for (int ix=0;ix<tb.w+2;ix++) {
                 SimplePiece sp = new SimplePiece();
                 
                 sp.setBackgroundColor("YELLOW");
  
                 if (iy < 1 || ix < 1 || iy == tb.h + 1 || ix == tb.w + 1) {
                     sp.setContent(""); sp.setIsClickable(true);
-                } else switch (tb.board[iy-1][ix-1]) {
-                    case 1: sp.setContent("◉"); break;
-                    case 2: sp.setContent("◈"); break;
-                    case 0: sp.setContent(""); sp.setIsClickable(true); break;
+                } else {
+                    switch (tb.board[iy-1][ix-1]) {
+                        case 1: sp.setContent("X"); break;
+                        case 2: sp.setContent("O"); break;
+                        case 0: sp.setContent(""); sp.setIsClickable(true); break;
+                    }
                 }
+                
+                
                 
                 b.getPieces()[iy][ix] = sp;
             }

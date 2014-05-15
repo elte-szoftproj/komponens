@@ -16,6 +16,9 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.swing.JOptionPane;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 @Named("userController")
 @SessionScoped
@@ -82,6 +85,8 @@ public class UserController implements Serializable {
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UserCreated"));
+            //JOptionPane.showMessageDialog(null, "The registration was succesfully");
+            //URL obj = new URL("http://localhost:8080/kompgame-web/");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

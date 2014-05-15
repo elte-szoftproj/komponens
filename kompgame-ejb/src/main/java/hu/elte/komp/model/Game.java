@@ -21,8 +21,6 @@ import javax.persistence.Version;
 /**
  *
  * Egy jatek aktualis allapotat szemlelteti az adatbazisban
- * 
- * @author Zsolt
  */
 @Entity
 public class Game implements Serializable {

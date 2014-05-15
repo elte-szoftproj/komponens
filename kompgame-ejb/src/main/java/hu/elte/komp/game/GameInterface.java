@@ -9,10 +9,6 @@ package hu.elte.komp.game;
 import hu.elte.komp.model.Game;
 import java.util.Set;
 
-/**
- *
- * @author Zsolt
- */
 public interface GameInterface {
         
     /**

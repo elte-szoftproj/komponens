@@ -22,10 +22,6 @@ import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-/**
- *
- * @author Zsolt
- */
 @Named(value = "GameBean")
 @RequestScoped
 public class GameBean {

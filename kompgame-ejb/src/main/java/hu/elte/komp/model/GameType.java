@@ -12,10 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-/**
- *
- * @author Zsolt
- */
 @Entity
 public class GameType implements Serializable {
     private static final long serialVersionUID = 1L;

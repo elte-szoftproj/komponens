@@ -21,8 +21,6 @@ import org.apache.commons.lang.StringUtils;
  * ijklmnop. Az aktivan kivalasztott babu nagybetuvel van irva.
  * 
  * Igazabol ez az osztaly tartalmazza a jatek kb. teljes logikajat is
- * 
- * @author Zsolt
  */
 public class BoardHelper {
 

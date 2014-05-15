@@ -8,10 +8,6 @@ package hu.elte.komp.kompgame.game.tictactoe;
 
 import java.util.Iterator;
 
-/**
- *
- * @author Zsolt
- */
 public class TictactoeAiIterator implements Iterator<TictactoeAiIterator.StepInfo> {
 
     public static class StepInfo {

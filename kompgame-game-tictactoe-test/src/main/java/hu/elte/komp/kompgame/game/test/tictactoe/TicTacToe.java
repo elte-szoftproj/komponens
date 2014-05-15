@@ -107,7 +107,7 @@ public class TicTacToe extends AbstractGame {
             }
         } catch (Exception ex) {
             // AI not found :(
-            g.setGameState(GameState.PLAYER1_WON);
+            game.setGameState(GameState.PLAYER1_WON);
         }
         
         try {

@@ -6,10 +6,6 @@
 
 package hu.elte.komp.util;
 
-/**
- *
- * @author Zsolt
- */
 public class GameCreator {
     
     private String aiName;

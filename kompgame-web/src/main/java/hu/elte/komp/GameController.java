@@ -21,10 +21,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-/**
- *
- * @author Zsolt
- */
 @SessionScoped
 @Named(value="gameController")
 public class GameController implements Serializable {

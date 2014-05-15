@@ -13,8 +13,6 @@ package hu.elte.komp.game;
  * A tabla egy negyzetracsbol all, amiknek a megjeleneset CSS-el lehet szabalyozni, 
  * valamint mindegyikrol el lehet donteni, hogy klikkelheto e. Pl. igy lehet megoldani
  * a sakktabla szeleit, ahol csak feliratok vannak.
- * 
- * @author Zsolt
  */
 public class Board {
     

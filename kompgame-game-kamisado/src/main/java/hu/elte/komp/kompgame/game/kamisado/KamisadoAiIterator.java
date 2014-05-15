@@ -10,10 +10,6 @@ import hu.elte.komp.game.Board;
 import java.util.Iterator;
 import sun.security.action.GetBooleanAction;
 
-/**
- *
- * @author Zsolt
- */
 public class KamisadoAiIterator implements Iterator<KamisadoAiIterator.StepInfo> {
 
     public static class StepInfo {

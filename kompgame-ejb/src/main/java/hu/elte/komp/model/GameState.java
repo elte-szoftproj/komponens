@@ -6,10 +6,6 @@
 
 package hu.elte.komp.model;
 
-/**
- *
- * @author Zsolt
- */
 public enum GameState {
     WAITING,
     

@@ -2,6 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+package hu.elte.komp.kompgame.game.kamisado;
+
+import hu.elte.komp.game.Board;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -10,11 +13,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author tamastoth
- */
 public class KamisadoGameTest {
+	
+	KamisadoGame game;
 	
 	public KamisadoGameTest() {
 	}
@@ -29,6 +30,7 @@ public class KamisadoGameTest {
 	
 	@Before
 	public void setUp() {
+		game = new KamisadoGame();
 	}
 	
 	@After
@@ -37,6 +39,13 @@ public class KamisadoGameTest {
 	// TODO add test methods here.
 	// The methods must be annotated with annotation @Test. For example:
 	//
-	// @Test
-	// public void hello() {}
+	 @Test
+	 public void name() {		 
+		 assertEquals("kamisado", game.getGameTypeName());
+	 }
+	 
+	 @Test
+	 public void board() {		 
+		 //Board b = game.getCurrentBoard("Player 1");		 
+	 }
 }

@@ -95,6 +95,7 @@ public class GameController implements Serializable {
         GameInterface gi = gameService.findGameInterfaceByName(gameTypeName);
         
         Game g = gi.createGame(principal.getName());
+        g.setTypeName(gameTypeName);
         gameService.updateGame(g);
          
         return "/secure/game.xhtml?faces-redirect=true&id=" + g.getId();
@@ -108,6 +109,7 @@ public class GameController implements Serializable {
         if (g.getGameState() != GameState.WAITING) {
             return "";
         }
+        this.setGameTypeName(g.getTypeName());
         Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
         if (g.getPlayer1().equals("hu:"+principal.getName())) {
             // can't join your own game
@@ -115,7 +117,6 @@ public class GameController implements Serializable {
         }
         g.setPlayer2("hu:" + principal.getName());
         g.setGameState(GameState.ONGOING_PLAYER1);
-        g.setTypeName(gameTypeName);
         gameService.updateGame(g);
         
         return "/secure/game.xhtml?faces-redirect=true&id=" + g.getId();

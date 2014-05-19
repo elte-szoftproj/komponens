@@ -23,10 +23,7 @@ import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-/**
- *
- * @author martin
- */
+
 @Stateless(name = "hu.elte.komp.kamisado", mappedName = "hu.elte.komp.kamisado")
 @LocalBean
 public class KamisadoGame extends AbstractGame {
@@ -98,6 +95,7 @@ public class KamisadoGame extends AbstractGame {
     public Set<String> getScoreCalculators() {
         Set<String> s = new HashSet<>();
         s.add("zero");
+        s.add("win");
         return s;
     }
 
@@ -108,6 +106,9 @@ public class KamisadoGame extends AbstractGame {
 
     @Override
     protected ScoreCalculator getScoreCalculator(String name) {
+        if ("win".equals(name)) { 
+            return new WinCalculator();
+        }
         return new ZeroCalculator();
     }
 

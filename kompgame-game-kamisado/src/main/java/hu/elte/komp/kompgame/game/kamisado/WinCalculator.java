@@ -8,10 +8,6 @@ package hu.elte.komp.kompgame.game.kamisado;
 
 import hu.elte.komp.game.ScoreCalculator;
 
-/**
- *
- * @author Zsolt
- */
 public class WinCalculator implements ScoreCalculator {
 
     @Override

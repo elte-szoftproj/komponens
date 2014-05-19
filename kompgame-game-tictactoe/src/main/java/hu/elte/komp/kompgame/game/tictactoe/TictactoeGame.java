@@ -14,6 +14,7 @@ import hu.elte.komp.game.ScoreCalculator;
 import hu.elte.komp.model.AiType;
 import hu.elte.komp.model.Game;
 import hu.elte.komp.model.GameState;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import javax.ejb.LocalBean;
@@ -47,7 +48,9 @@ public class TictactoeGame extends AbstractGame{
 
     @Override
     public Board getCurrentBoard(String player) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Game g = getEntityInfo();
+        
+        return BoardHelper.getBoardForString(g.getBoardInfo(), g.isFirstPlayer(player));
     }
 
     @Override
@@ -70,7 +73,10 @@ public class TictactoeGame extends AbstractGame{
 
     @Override
     public Set<String> getScoreCalculators() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        HashSet<String> ret = new HashSet<>();
+        ret.add("longest");
+        
+        return ret;
     }
 
     @Override

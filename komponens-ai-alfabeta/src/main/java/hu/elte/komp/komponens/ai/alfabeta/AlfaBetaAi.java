@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.elte.komp.komponens.ai.alfabeta;
 
 import hu.elte.komp.game.AiInterface;
@@ -10,13 +6,13 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 /**
- *
+ * AlfaBeta AI az {@link hu.elte.komp.game.AiInterface AiInterface} szerint.
  * @author davidangeli
  */
 @Stateless(name="hu.elte.komp.ai.alfabeta", mappedName = "hu.elte.komp.ai.alfabeta")
 @LocalBean
 public class AlfaBetaAi implements AiInterface {
-    private static final int MELYSEG=2;
+    private static final int MELYSEG=5;
 
     @Override
     public Object getNextStep(GameGraphInterface gameGraph, boolean youArePlayerOne) {
@@ -31,17 +27,18 @@ public class AlfaBetaAi implements AiInterface {
                 nextstep=o;           
             }
         }
-        // ha keveset lephetunk, es tul nagy random? feladjuk...
-        return nextstep;        
+        // ha nem talál lépést, null-lal tér vissza
+        return nextstep;
     }
     
     private long alfabeta (GameGraphInterface gameGraph, Object node, int m, boolean maximizing, long alpha, long beta){
         long al=alpha, be=beta;
-        //ha level, erteket kap
+        //ha levél, értéket kap
         if (m==0 || !gameGraph.getPossibleSteps(node).iterator().hasNext()){
           return gameGraph.getStepScoreForPlayer(node, false);
         }
         
+        //egyébként
         if (maximizing){
             for(Object o: gameGraph.getPossibleSteps(node)){
                 be = Math.min(be, alfabeta(gameGraph, o, m-1, !maximizing, al, be));

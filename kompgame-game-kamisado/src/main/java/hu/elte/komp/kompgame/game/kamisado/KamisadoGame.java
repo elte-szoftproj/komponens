@@ -94,8 +94,9 @@ public class KamisadoGame extends AbstractGame {
     @Override
     public Set<String> getScoreCalculators() {
         Set<String> s = new HashSet<>();
+        s.add("strike");
         s.add("zero");
-        s.add("win");
+        s.add("win");        
         return s;
     }
 
@@ -106,6 +107,9 @@ public class KamisadoGame extends AbstractGame {
 
     @Override
     protected ScoreCalculator getScoreCalculator(String name) {
+        if ("strike".equals(name)) { 
+            return new StrikeCalculator();
+        }
         if ("win".equals(name)) { 
             return new WinCalculator();
         }

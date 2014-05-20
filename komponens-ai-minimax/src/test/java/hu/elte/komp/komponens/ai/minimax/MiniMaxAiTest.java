@@ -20,11 +20,13 @@ import org.junit.Test;
  * @author angelid
  */
 public class MiniMaxAiTest {
-    final static Random rnd=new Random();
+    final static Random RND=new Random();
+    final static int GRAPHLEVEL=3;
+    final static int MAXCHILDS=2;
+    static int nodeID;
+    
     MiniMaxAi ABTest;
     Node gyoker;
-    final static int level=2;
-    final static int maxchild=3;
     
     public MiniMaxAiTest() {
     }
@@ -41,7 +43,7 @@ public class MiniMaxAiTest {
     public void setUp() {
         ABTest=new MiniMaxAi();
         gyoker=new Node();
-        createGraph(gyoker, level, maxchild);        
+        createGraph(gyoker, GRAPHLEVEL, MAXCHILDS);        
     }  
 
     
@@ -61,12 +63,12 @@ public class MiniMaxAiTest {
         printRoute(gyoker,"root:");
         Object result = ABTest.getNextStep(gameGraph, youArePlayerOne);
         assert gyoker.children.contains((Node)result);
-        System.out.println("Next step found: "+((Node)result).score);
+        System.out.println("Next step found: "+result);
     }
     
     private void createGraph(Node nd, int l, int m){
         for (int i=0;i<l;++i){
-            int mc=new Random().nextInt(m+1);
+            int mc=RND.nextInt(m+1);            
             for (int j=0;j<mc;++j){
                 Node n=new Node();
                 nd.addChild(n);
@@ -76,7 +78,7 @@ public class MiniMaxAiTest {
     }
     
     private void printRoute(Node nd, String route){
-        String rt=route+ " " + nd.score;
+        String rt=route+ " " + nd;
         if (nd.children.isEmpty()) {
             System.out.println(rt);
         }
@@ -89,11 +91,13 @@ public class MiniMaxAiTest {
     
     private class Node implements GameGraphInterface {
         
+        private String name;
         private Long score;        
         private final HashSet<Node> children;
         
         Node() {
-            this.score = new Long(rnd.nextInt(100)+1);
+            this.name="n"+(++nodeID);
+            this.score = new Long(RND.nextInt(100)+1);
             this.children = new HashSet<Node>() {};
         }
 
@@ -101,8 +105,9 @@ public class MiniMaxAiTest {
             children.add(node);
         }
         
-        public Long getScore() {
-            return this.score;
+        @Override
+        public String toString() {
+            return children.isEmpty()? this.name+":"+this.score : this.name;
         }
 
         @Override

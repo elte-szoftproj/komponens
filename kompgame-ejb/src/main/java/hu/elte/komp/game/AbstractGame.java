@@ -69,6 +69,7 @@ public abstract class AbstractGame implements GameInterface, GameGraphInterface 
         g.setGameState(GameState.WAITING);
         g.setLastStepAt(new Date());
         g.setPlayer1("hu:" + firstPlayer);
+        g.setTypeName(getGameTypeName());
         gameService.persistGame(g);
         
         return g;

@@ -35,7 +35,6 @@ import javax.persistence.criteria.Root;
 @LocalBean
 public class GameService {
 
-    
     @PersistenceContext(unitName="hu.elte.komp_kompgame-pu")
     private EntityManager em;
     

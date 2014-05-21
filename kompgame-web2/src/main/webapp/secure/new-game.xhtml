@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/main.xhtml">
+    
+    <ui:define name="title" >
+        #{bundle['pages.new-game.title']}
+    </ui:define>
+       
+    <ui:define name="content">
+        <h1>
+            #{bundle['pages.new-game.title']}
+        </h1>
+        <h:form id="form">
+            <h:panelGrid columns="3" styleClass="ui-form">
+                <h:outputLabel for="game-type" value="#{bundle['pages.new-game.game']}" styleClass="ui-form-label" />
+                <h:selectOneMenu id="game-type"
+                                 value="#{newGameScreen.gameTypeIndex}"
+                                 styleClass="ui-form-input"
+                                 validator="#{newGameScreen.validateGameTypeIndex}" >
+                    <f:selectItem itemLabel="#{bundle['list.select']}" itemValue="-1" />
+                    <f:selectItems value="#{newGameScreen.gameList}" var="li"
+                                   itemLabel="#{li.label}"
+                                   itemValue="#{li.index}" />
+                    <f:ajax event="blur" render="game-type-message score-type" />
+                </h:selectOneMenu>
+                <h:message id="game-type-message" for="game-type" styleClass="ui-form-message" />
+
+                <h:outputLabel for="ai-type" value="#{bundle['pages.new-game.enemy']}" styleClass="ui-form-label" />
+                <h:selectOneMenu id="ai-type" value="#{newGameScreen.aiTypeIndex}" styleClass="ui-form-input" >
+                    <f:selectItem itemLabel="#{bundle['list.select']}" itemValue="-1" />
+                    <f:selectItems value="#{newGameScreen.aiList}" var="li"
+                                   itemLabel="#{li.label}"
+                                   itemValue="#{li.index}" />
+                    <f:ajax event="blur" render="ai-type-message" />
+                </h:selectOneMenu>
+                <h:message id="ai-type-message" for="ai-type" styleClass="ui-form-message" />
+
+                <h:outputLabel for="score-type" value="#{bundle['pages.new-game.score']}" styleClass="ui-form-label"/>
+                <h:selectOneMenu id="score-type" value="#{newGameScreen.scoreTypeIndex}" styleClass="ui-form-input" >
+                    <f:selectItem itemLabel="#{bundle['list.select']}" itemValue="-1" />
+                    <f:selectItems value="#{newGameScreen.scoreList}" var="li"
+                                   itemLabel="#{li.label}"
+                                   itemValue="#{li.index}" />
+                    <f:ajax event="blur" render="score-type-message" />
+                </h:selectOneMenu>
+                <h:message id="score-type-message" for="score-type" styleClass="ui-form-message" />
+            </h:panelGrid>
+            <div class="ui-button-group" >
+                <h:commandLink value="#{bundle['pages.new-game.start']}" action="#{newGameScreen.create()}" styleClass="ui-large-button" />
+                <h:link value="#{bundle['pages.new-game.cancel']}" outcome="/index" styleClass="ui-large-button" />
+            </div>
+        </h:form>
+    </ui:define>
+    
+</ui:composition>

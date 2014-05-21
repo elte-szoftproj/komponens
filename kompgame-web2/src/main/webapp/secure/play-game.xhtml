@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/template/main.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:define name="title" >
+        #{playGameScreen.gameOpen ? bundle['pages.play-game.title.start'] : bundle['pages.play-game.title.none']}
+        #{playGameScreen.gameOpen ? playGameScreen.gameName : ""}
+        #{playGameScreen.gameOpen ? bundle['pages.play-game.title.finish'] : ''}
+    </ui:define>
+    
+    <ui:define name="script" >
+        <script type="text/javascript" src='../script/jquery-1.11.1.min.js'></script>
+        <script type="text/javascript" src="../script/poll.js"></script>
+    </ui:define>
+    
+    <ui:define name="content">
+        <h1>
+            #{playGameScreen.gameOpen ? bundle['pages.play-game.title.start'] : bundle['pages.play-game.title.none']}
+            #{playGameScreen.gameOpen ? playGameScreen.gameName : ""}
+            #{playGameScreen.gameOpen ? bundle['pages.play-game.title.finish'] : ''}
+        </h1>
+        
+        <ui:fragment rendered="#{playGameScreen.gameOpen}" >
+            <div class="ui-game" >
+                <h:form>
+                    <h2>
+                        <h:outputText value="#{bundle['pages.play-game.message.waiting']}" rendered="#{playGameScreen.waiting}" />
+                        <h:outputText value="#{bundle['pages.play-game.message.active']}" rendered="#{playGameScreen.playerActive}" />
+                        <h:outputText value="#{bundle['pages.play-game.message.passive']}" rendered="#{playGameScreen.playerPassive}" />
+                        <h:outputText value="#{bundle['pages.play-game.message.won']}" rendered="#{playGameScreen.havePlayerWon()}" />
+                        <h:outputText value="#{bundle['pages.play-game.message.lost']}" rendered="#{playGameScreen.havePlayerLost()}" />
+                        <h:outputText value="#{bundle['pages.play-game.message.stalemate']}" rendered="#{playGameScreen.stalemate}" />
+                    </h2>
+                    
+                    <table class="ui-game-table" >
+                        <ui:repeat value="#{playGameScreen.gameTable}" var="line"  varStatus="row" >
+                            <tr>
+                                <ui:repeat value="#{line}" var="cell" varStatus="column" >
+                                    <td>
+                                        <h:commandLink action="#{playGameScreen.onCellClick(cell, column.index, row.index)}">
+                                            <div class="ui-game-cell" style="#{cell.styleOverride}" >
+                                                #{cell.content}
+                                            </div>
+                                            <f:ajax render="@form" />
+                                        </h:commandLink>
+                                    </td>
+                                </ui:repeat>
+                            </tr>
+                        </ui:repeat>
+                    </table>
+                    <h:commandLink id="poll" styleClass="ui-hidden marker-poll" action="#{playGameScreen.onPoll()}" >
+                        <f:ajax render="@form" onerror="console.log"/>
+                    </h:commandLink>
+                </h:form>
+            </div>
+            <div class="ui-button-group" >
+                <h:link value="#{bundle['pages.play-game.exit']}" outcome="/index" styleClass="ui-large-button" />            
+            </div>
+        </ui:fragment>
+    </ui:define>
+    
+</ui:composition>
+
+       
+
+

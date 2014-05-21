@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      template="/template/main.xhtml">
+    
+    <ui:define name="title" >
+        #{bundle['pages.login.title']}
+    </ui:define>
+       
+    <ui:define name="content">
+        <h1>
+            #{bundle['pages.login.title']}
+        </h1>
+        <h:form>
+            <h:panelGrid columns="2" styleClass="ui-form">
+                <h:outputLabel for="username" styleClass="ui-form-label" value="#{bundle['pages.login.username']}" />
+                <h:inputText id="username" styleClass="ui-form-input" value="#{loginScreen.username}" required="true" />
+                <h:outputLabel for="password" styleClass="ui-form-label" value="#{bundle['pages.login.password']}" />
+                <h:inputSecret id="password" styleClass="ui-form-input" value="#{loginScreen.password}" required="true" />
+            </h:panelGrid>
+            <div class="ui-button-group">
+                <h:commandLink value="#{bundle['pages.login.register']}" styleClass="ui-large-button" action="#{loginScreen.register(true)}" />
+                <h:commandLink value="#{bundle['pages.login.login']}" styleClass="ui-large-button" action="#{loginScreen.login(true)}" />
+                <h:link value="#{bundle['pages.login.cancel']}" styleClass="ui-large-button" outcome="#{param.prev != null ? param.prev : '/index'}" />
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

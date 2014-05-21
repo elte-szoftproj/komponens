@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+     xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <div class="ui-login-bar">
+        <ui:fragment rendered="#{request.remoteUser == null}">
+            <div class="ui-login-message">
+                #{bundle['bar.login.welcome.no-login']}
+            </div>
+            <div class="ui-login-tools">
+                <h:form>
+                    <h:inputText styleClass="ui-login-input" value="#{loginScreen.username}" />
+                    <h:inputSecret styleClass="ui-login-input" value="#{loginScreen.password}" />
+                    <h:commandLink styleClass="ui-login-button" value="login" action="#{loginScreen.login(false)}"/>
+                </h:form>
+            </div>
+        </ui:fragment>
+        <ui:fragment rendered="#{request.remoteUser != null}">
+            <div class="ui-login-message">
+                #{bundle['bar.login.welcome.start']}
+                <span class="ui-login-name">#{request.remoteUser}</span>
+                #{bundle['bar.login.welcome.finish']}
+                <ui:fragment rendered="false">
+                    #{bundle['bar.login.game.start']}
+                    <h:link outcome="/faces/secure/play-game" value="#{bundle['bar.login.game.link']}" />
+                    #{bundle['bar.login.game.finish']}
+                </ui:fragment>
+            </div>
+            <div class="ui-login-tools">
+                <h:form>
+                    <h:commandLink styleClass="ui-login-button" value="logout" action="#{loginScreen.logout(false)}"/>
+                </h:form>
+            </div>
+        </ui:fragment>
+    </div>
+    
+    
+</ui:fragment>

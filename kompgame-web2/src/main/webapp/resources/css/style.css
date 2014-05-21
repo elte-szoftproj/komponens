@@ -1,0 +1,254 @@
+/* set default values */
+body, div {
+    border: 0 none;
+    margin: 0 auto;
+    display: block;
+    font-family: sans-serif;
+}
+
+/* set page backgorund */
+body {
+    background-color: lightgray;
+}
+
+.ui-header {
+    color: darkgray;
+    font-weight: bold;
+    font-size: 80%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.ui-footer {
+    color: darkgray;
+    font-weight: bold;
+    font-size: 80%;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.ui-page {
+    background-color: white;
+    width: 80%;
+    margin-top: 80px;
+    margin-bottom: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border: 1px black solid;
+    border-radius: 10px;
+    box-shadow: 10px 10px 30px black;
+}
+
+.ui-content {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    min-height: 200px;
+}
+
+.ui-login-bar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid #3f8fd2;
+    border-bottom: 1px solid #3f8fd2;
+}
+
+.ui-login-message {
+    display: inline-block;
+    float: left;
+    color: #043c6b;
+    margin: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.ui-login-tools {
+    display: inline-block;
+    float: right;
+    color: #043c6b;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.ui-login-input {
+    display: inline-block;
+    border: 1px #0b5fa5 solid;
+    border-radius: 5px;
+    color: white;
+    background-color: #66a1d2;
+    font-size: small;
+    margin: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.ui-login-button {
+    display: inline-block;
+    border: 1px #66a1d2 solid;
+    border-radius: 5px;
+    color: #0b5fa5;
+    background-color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: small;
+    margin: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.ui-login-name {
+    font-weight: bold;
+}
+
+/* button styles */
+.ui-button {
+}
+
+.ui-large-button {
+    display: inline-block;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 0.5em;
+    border: 10px #66a1d2 solid;
+    border-radius: 20px;
+    background-color: #0b5fa5;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 10px 10px 20px #043c6b;
+}
+
+.ui-button-group {
+    text-align: center
+}
+
+/* form styles */
+.ui-border {
+    padding: 0.5em;
+    margin-top: 2em;
+    border: 10px solid #3f8fd2;
+    border-radius: 20px;
+}
+
+.ui-message {
+    color: red;
+    font-size: 0.8em;
+    font-weight: bold;
+    font-variant: small-caps;
+}
+
+.ui-form {
+    padding: 0.5em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    border: 10px solid #3f8fd2;
+    border-radius: 20px;
+    max-width: 80%;
+}
+
+.ui-form td {
+    padding: 0.5em;
+}
+
+.ui-form-label {
+    max-width: 80%;
+    
+}
+
+.ui-form-input {
+    width: 30em;
+    max-width: 80%;
+}
+
+.ui-form-message {
+    color: red;
+    font-size: 0.8em;
+    font-weight: bold;
+    max-width: 80%;
+}
+
+.ui-form-listbox {
+    width: 200px;
+}
+
+.ui-game {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: auto;
+}
+
+.ui-game-table {
+    padding: 0.5em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    border: 10px solid #3f8fd2;
+    border-radius: 20px;
+    max-width: 80%;
+}
+
+.ui-game-cell {
+    width: 2em;
+    height: 2em;
+    overflow: hidden;
+    border: 1px solid black;
+    font-size: 1.5em;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: white;
+    text-shadow:
+        2px 0 0 black,
+        -2px 0 0 black,
+        0 2px 0 black,
+        0 -2px 0 black,
+        1px 1px black,
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black;
+}
+
+.ui-hidden {
+    display: none;
+}
+
+/* text styles */
+h1 {
+    background-color: #3f8fd2;
+    margin: 0;
+    padding: 0.5em;
+    display: block;
+    width: auto;
+    border-radius: 10px;
+}
+
+h2 {
+    
+}
+
+h3 {
+    
+}
+
+p {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+a {
+    text-decoration: none;
+}

@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/main.xhtml">
+    
+    <ui:define name="title" >
+        #{bundle['pages.join-game.title']}
+    </ui:define>
+    
+    <ui:define name="content" >
+        <h1>
+            #{bundle['pages.join-game.title']}
+        </h1>
+        <h:form id="form">
+            <h:panelGrid columns="3" styleClass="ui-form">
+                <h:outputLabel for="game-type" value="#{bundle['pages.join-game.game']}" styleClass="ui-form-label" />
+                <h:selectOneMenu id="game-type"
+                                 value="#{joinGameScreen.gameTypeIndex}"
+                                 styleClass="ui-form-input"
+                                 >
+                    <f:selectItem itemLabel="#{bundle['list.select']}" itemValue="-1" />
+                    <f:selectItems value="#{joinGameScreen.gameList}" var="li"
+                                   itemLabel="#{li.label}"
+                                   itemValue="#{li.index}" />
+                    <f:ajax event="blur" render="game-type-message waiting-game" />
+                </h:selectOneMenu>
+                <h:message id="game-type-message" for="game-type" styleClass="ui-form-message" />
+                <h:outputLabel for="waiting-game" value="#{bundle['pages.join-game.waiting']}" styleClass="ui-form-label" />
+                <h:selectOneListbox id="waiting-game" value="#{joinGameScreen.waitingGameIndex}" styleClass="ui-form-input" size="12">
+                    <f:selectItem itemLabel="#{bundle['list.select']}" itemValue="-1" />
+                    <f:selectItems value="#{joinGameScreen.waitingList}" var="li"
+                                   itemLabel="#{bundle['pages.join-game.waiting.item.start']}#{li.label}#{bundle['pages.join-game.waiting.item.finish']}"
+                                   itemValue="#{li.index}" />
+                </h:selectOneListbox>
+                <h:message id="waiting-game-message" for="waiting-game" styleClass="ui-form-message" />
+            </h:panelGrid>
+            <div class="ui-button-group" >
+                <h:commandLink styleClass="ui-large-button" value="#{bundle['pages.join-game.join']}" action="#{joinGameScreen.join()}" />
+                <h:commandLink styleClass="ui-large-button" value="#{bundle['pages.join-game.delete']}" action="#{joinGameScreen.delete()}" />
+                <h:link styleClass="ui-large-button" outcome="/faces/index" value="#{bundle['pages.join-game.cancel']}" />
+            </div>
+        </h:form>
+    </ui:define>
+       
+</ui:composition>

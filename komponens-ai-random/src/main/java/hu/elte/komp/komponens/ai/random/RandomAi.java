@@ -23,6 +23,8 @@ public class RandomAi implements AiInterface {
         int i = 0;
         int lookfor = (int)(Math.random() * 20);
         
+        Object last = null;
+        
         for(Object o: gameGraph.getPossibleSteps(gameGraph.getCurrentStep())) {
             i++;
             // nop, just to the if it works
@@ -30,10 +32,10 @@ public class RandomAi implements AiInterface {
             if (i == lookfor) {
                 return o;
             }
+            last = o;
         }
             
-        // ha keveset lephetunk, es tul nagy random? feladjuk...
-        return null;
+        return last;
         
     }
 

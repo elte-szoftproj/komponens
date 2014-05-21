@@ -9,10 +9,6 @@ package hu.elte.komp.game;
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- *
- * @author Zsolt
- */
 public interface GameGraphInterface {
 
     /**

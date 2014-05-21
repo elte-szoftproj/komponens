@@ -6,10 +6,6 @@
 
 package hu.elte.komp.game;
 
-/**
- *
- * @author Zsolt
- */
 public class SimplePiece implements Piece{
     protected boolean isClickable;
     protected String cssClass;

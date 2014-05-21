@@ -20,10 +20,6 @@ import javax.persistence.Table;
 import javax.persistence.Version;
 import org.apache.commons.codec.digest.DigestUtils;
 
-/**
- *
- * @author Zsolt
- */
 @Entity
 @Table(name="USERS")
 public class User implements Serializable {

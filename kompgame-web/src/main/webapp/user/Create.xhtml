@@ -15,19 +15,13 @@
             </h:panelGroup>
             <h:form>
                 <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateUserLabel_password}" for="password" />
-                    <h:inputText id="password" value="#{userController.selected.password}" title="#{bundle.CreateUserTitle_password}" />
                     <h:outputLabel value="#{bundle.CreateUserLabel_username}" for="username" />
                     <h:inputText id="username" value="#{userController.selected.username}" title="#{bundle.CreateUserTitle_username}" />
+                    <h:outputLabel value="#{bundle.CreateUserLabel_password}" for="password" />
+                    <h:inputText id="password" value="#{userController.selected.password}" title="#{bundle.CreateUserTitle_password}" />
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{userController.create}" value="#{bundle.CreateUserSaveLink}" />
-                <br />
-                <br />
-                <h:commandLink action="#{userController.prepareList}" value="#{bundle.CreateUserShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateUserIndexLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

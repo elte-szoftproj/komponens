@@ -12,10 +12,6 @@ import hu.elte.komp.model.GameState;
 import java.util.Date;
 import javax.ejb.EJB;
 
-/**
- *
- * @author Zsolt
- */
 public abstract class AbstractGame implements GameInterface, GameGraphInterface {
 
 
@@ -45,9 +41,8 @@ public abstract class AbstractGame implements GameInterface, GameGraphInterface 
     public long getStepScoreForPlayer(Object step, boolean forPlayerOne) {
         if (!getEntityInfo().isCurrentPlayerAi()) {
             return 0;
-        }
-        String[] p = getEntityInfo().getCurrentPlayerName().split("|");
-        
+        }        
+        String[] p = getEntityInfo().getCurrentPlayerName().split("\\|");        
         ScoreCalculator sc = getScoreCalculator(p[1]);
         return sc.getScoreForStep(step);
     }

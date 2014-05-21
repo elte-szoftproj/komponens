@@ -9,10 +9,6 @@ package hu.elte.komp;
 import java.util.List;
 import javax.persistence.EntityManager;
 
-/**
- *
- * @author Zsolt
- */
 public abstract class AbstractFacade<T> {
     private Class<T> entityClass;
 

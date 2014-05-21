@@ -11,10 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Zsolt
- */
 public class KamisadoAiIteratorTest {
     
     KamisadoAiIterator ai;
@@ -31,7 +27,7 @@ public class KamisadoAiIteratorTest {
                 "        " +
                 "        " +
                 "        " +
-                "abcdefgh", false);
+                "abcdefgh ", false);
     }
 
     // TODO add test methods here.

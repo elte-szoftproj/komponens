@@ -4,6 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Two-Player Games</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
     </head>
     <body>
         <table width="100%">

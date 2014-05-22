@@ -7,15 +7,31 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Playing the game</title>
+        <script type="text/javascript">
+            $.urlParam = function(name){
+                var results = new RegExp('[\\?&amp;]' + name + '=([^&amp;#]*)').exec(window.location.href);
+                return results[1] || 0;
+            };
+        </script>
+        <script language="javascript">
+                function logout() {
+                var p = window.location.protocol + "//";
+                var h = window.location.host + "/";
+                window.location = p + "logout:password@" + h + "kompgame-web/";
+            }
+        </script>
         <h:outputScript name="jquery.min.js" />
-        
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <c:if test="#{GameBean.waitingForSomebody()==true}">
             <meta http-equiv="refresh" content="3; url = ?id=#{GameBean.gameId}" />
         </c:if>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
     </h:head>
     
     <h:body>
-        
+        <div style="float: right;">
+            <input type="button" onclick="logout(); return false;" value="Log out"></input>
+        </div>
         <style>
             .gametable td {
                 width: 30px; height: 30px; border: #000 5px solid; text-align: center; vertical-align: middle;

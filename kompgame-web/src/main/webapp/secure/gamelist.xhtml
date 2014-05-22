@@ -1,12 +1,25 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Game List</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <script language="javascript">
+                function logout() {
+                var p = window.location.protocol + "//";
+                var h = window.location.host + "/";
+                window.location = p + "logout:password@" + h + "kompgame-web/";
+            }
+        </script>
     </h:head>
     <h:body>
+        <div style="float: right;">
+            <input type="button" onclick="logout(); return false;" value="Log out"></input>
+        </div>
         <a href="/kompgame-web/faces/secure/creategame.xhtml?game=kamisado">New Kamisado Game</a><br/>
         <a href="/kompgame-web/faces/secure/creategame.xhtml?game=tictactoe">New Tit-tac-toe Game</a><br/>
         <a href="/kompgame-web/faces/secure/creategame.xhtml?game=tic-tac-toe-test">New Tit-tac-toe "Test" Game</a>

@@ -10,6 +10,7 @@ import hu.elte.komp.game.GameInterface;
 import hu.elte.komp.model.AiType;
 import hu.elte.komp.model.Game;
 import hu.elte.komp.model.GameState;
+import hu.elte.komp.model.GameType;
 import hu.elte.komp.util.GameCreator;
 import java.io.Serializable;
 import java.security.Principal;
@@ -29,6 +30,9 @@ public class GameController implements Serializable {
     
     @EJB
     GameService gameService;
+    
+    @EJB
+    GameTypeService gameTypeService;
         
     private static final long serialVersionUID = 1L;
     private String gameTypeName;
@@ -41,7 +45,9 @@ public class GameController implements Serializable {
         this.gameTypeName = gameTypeName;
     }
     
-    
+    public List<GameType> getGameTypes(){
+        return gameTypeService.getGameTypes();
+    }
     
     /**
      * Creates a new instance of GameController

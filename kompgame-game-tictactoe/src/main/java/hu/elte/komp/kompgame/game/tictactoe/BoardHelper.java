@@ -22,6 +22,9 @@ import org.apache.commons.lang.StringUtils;
  */
 public class BoardHelper {
     
+    /**
+     * Helper class for maintaining the gameboard
+     */
     public static int n=5; //egyenlőre a méret beégetve
     //private static int[][] board = new int[n][n];
 
@@ -109,9 +112,7 @@ public class BoardHelper {
                         case 0: sp.setContent(""); sp.setIsClickable(true); break;
                     }
                 }
-                
-                
-                
+                                                
                 b.getPieces()[iy][ix] = sp;
             }
         }
@@ -120,7 +121,7 @@ public class BoardHelper {
     }
     
     static Iterator<TictactoeAiIterator.StepInfo> getPossibleSteps(String s, boolean isPlayerOne) {
-        throw new UnsupportedOperationException("Not implemented!");
+        return new TictactoeAiIterator(s, isPlayerOne);
     }
     
     

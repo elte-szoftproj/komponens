@@ -8,21 +8,41 @@ package hu.elte.komp.kompgame.game.tictactoe;
 
 import java.util.Iterator;
 
+/**
+ *
+ * @author user
+ */
 public class TictactoeAiIterator implements Iterator<TictactoeAiIterator.StepInfo> {
 
+    /**
+     *
+     */
     public static class StepInfo {
         String board;
         boolean nextIsPlayerOne;
 
+        /**
+         *
+         * @param board
+         * @param nextIsPlayerOne
+         */
         public StepInfo(String board, boolean nextIsPlayerOne) {
             this.board = board;
             this.nextIsPlayerOne = nextIsPlayerOne;
         }
 
+        /**
+         *
+         * @return
+         */
         public String getBoard() {
             return board;
         }
 
+        /**
+         *
+         * @return
+         */
         public boolean isNextIsPlayerOne() {
             return nextIsPlayerOne;
         }
@@ -38,6 +58,11 @@ public class TictactoeAiIterator implements Iterator<TictactoeAiIterator.StepInf
     int direction, position; // target offset
     int wx, wy; // target position
     
+    /**
+     *
+     * @param s
+     * @param playerOne
+     */
     public TictactoeAiIterator(String s, boolean playerOne) {
         this.b = s;
         this.playerOne = playerOne;

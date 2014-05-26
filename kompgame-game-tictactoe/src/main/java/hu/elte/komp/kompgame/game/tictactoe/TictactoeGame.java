@@ -33,9 +33,13 @@ public class TictactoeGame extends AbstractGame{
 
     @Override
     protected ScoreCalculator getScoreCalculator(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ZeroCalculator();
     }
 
+    /**
+     * Crate the base board with a size 5x5 
+     * @return
+     */
     @Override
     protected String createBoard() {
         return BoardHelper.getInitialBoard();
@@ -71,6 +75,10 @@ public class TictactoeGame extends AbstractGame{
         getGameService().updateGame(g);
     }
 
+    /**
+     * Get the possible score calculators for the game
+     * @return
+     */
     @Override
     public Set<String> getScoreCalculators() {
         HashSet<String> ret = new HashSet<>();
@@ -134,6 +142,11 @@ public class TictactoeGame extends AbstractGame{
         getGameService().updateGame(g);
     }
     
+    /**
+     * Places the current step on the board
+     * @param g
+     * @param step
+     */
     public void doStep(Game g, Object step) {
         if (!(step instanceof TictactoeAiIterator.StepInfo)) {
             throw new RuntimeException("Invalid argument! " + step.getClass().toString());

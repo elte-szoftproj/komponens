@@ -6,6 +6,10 @@
 
 package hu.elte.komp.kompgame.game.tictactoe;
 
+/**
+ *
+ * @author user
+ */
 public class TictactoeBoard {
    
     
@@ -16,6 +20,10 @@ public class TictactoeBoard {
     int score1;
     int score2;
     
+    /**
+     *
+     * @param s
+     */
     public TictactoeBoard(String s) {
         String[] a = s.split(":");
         w = Integer.parseInt(a[0]);
@@ -78,10 +86,18 @@ public class TictactoeBoard {
         calculateScores();
     }
 
+    /**
+     * Get the score of first Player 
+     * @return
+     */
     public int getScore1() {
         return score1;
     }
 
+    /**
+     * Get the score of second Player 
+     * @return
+     */
     public int getScore2() {
         return score2;
     }

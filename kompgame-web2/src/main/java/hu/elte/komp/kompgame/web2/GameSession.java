@@ -62,7 +62,7 @@ public class GameSession implements Serializable {
         gameService.updateGame(game);
     }
     
-    @PreDestroy
+    //@PreDestroy
     public void leaveGame() {
         if (game.getGameState() == GameState.ONGOING_PLAYER1 || game.getGameState() == GameState.ONGOING_PLAYER2) {
             if (firstPlayer) {

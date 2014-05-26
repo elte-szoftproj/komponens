@@ -20,11 +20,11 @@ public class MiniMaxAi implements AiInterface {
         
         long max=Long.MIN_VALUE;
         Object nextstep=null;
-        ArrayList<Long> nextsteps=new ArrayList<>();
+//        ArrayList<Long> nextsteps=new ArrayList<>();
         
         for(Object o: gameGraph.getPossibleSteps(gameGraph.getCurrentStep())) {
             long l=minimax(gameGraph,o,MELYSEG,false);
-            nextsteps.add(l);
+//            nextsteps.add(l);
             if(l>=max) {
                 max=l;
                 nextstep=o;           

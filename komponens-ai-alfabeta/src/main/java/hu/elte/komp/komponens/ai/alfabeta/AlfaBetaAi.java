@@ -2,6 +2,7 @@ package hu.elte.komp.komponens.ai.alfabeta;
 
 import hu.elte.komp.game.AiInterface;
 import hu.elte.komp.game.GameGraphInterface;
+import java.util.ArrayList;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -19,9 +20,11 @@ public class AlfaBetaAi implements AiInterface {
         
         long max=Long.MIN_VALUE;
         Object nextstep=null;
+//        ArrayList<Long> nextsteps=new ArrayList<>();
         
         for(Object o: gameGraph.getPossibleSteps(gameGraph.getCurrentStep())) {
             long l=alfabeta(gameGraph,o,MELYSEG,false,Long.MIN_VALUE,Long.MAX_VALUE);
+//            nextsteps.add(l);
             if(l>=max) {
                 max=l;
                 nextstep=o;           

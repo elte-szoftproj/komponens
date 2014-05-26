@@ -7,8 +7,12 @@
 package hu.elte.komp.kompgame.web2;
 
 import hu.elte.komp.GameService;
+import hu.elte.komp.GameTypeService;
 import hu.elte.komp.game.GameInterface;
 import hu.elte.komp.model.AiType;
+import hu.elte.komp.model.Game;
+import hu.elte.komp.model.GameState;
+import hu.elte.komp.model.GameType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +32,9 @@ public class NewGameScreen implements Serializable {
         
     public List<ListItem> getGameList() {
         if (gameList == null) {
-            gameList = new ArrayList<>(gameIdList.length + 1);
-            for (String id : gameIdList) {
-                GameInterface gi = gameService.findGameInterfaceByName(id);
+            gameList = new ArrayList<>();
+            for (GameType gt : gameTypeService.getGameTypes()) {
+                GameInterface gi = gameService.findGameInterfaceByName(gt.getName());
                 gameList.add(new ListItem(gameList.size(), gi.getGameTypeName(), "", gi));
             }
         }
@@ -64,8 +68,15 @@ public class NewGameScreen implements Serializable {
     public String create() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
+        
         gameSession.newGame(gameType.createGame(request.getRemoteUser()), gameType, request.getRemoteUser());
+        Game g = gameSession.getGame();
+        
+        if (aiType != null) {
+            g.setPlayer2("ai:" + aiType + "|" + scoreType);
+            g.setGameState(GameState.ONGOING_PLAYER1);
+            gameService.updateGame(g);
+        }
         
         return "/secure/play-game";
     }
@@ -146,14 +157,15 @@ public class NewGameScreen implements Serializable {
     private int scoreTypeIndex = -1;
     private String scoreType;
     
-    private final String[] gameIdList = new String[]{"kamisado"};
-    
     private List<ListItem> gameList;
     private List<ListItem> aiList;
     private List<ListItem> scoreList;
 
     @EJB
     private GameService gameService;
+    
+    @EJB
+    private GameTypeService gameTypeService;
     
     @ManagedProperty("#{gameSession}")
     private GameSession gameSession;

@@ -74,6 +74,10 @@ public class PlayGameScreen {
     public String onCellClick(Piece piece, int x, int y) {
         if (piece.isClickable() && isPlayerActive()) {
             gameSession.getGameInterface().clickedOn(gameSession.getPlayer(), new Position(x, y));
+            
+            while (gameSession.getGame().isCurrentPlayerAi()) {
+                gameSession.getGameInterface().doAiStep();
+            }
         }
         return null;
     }

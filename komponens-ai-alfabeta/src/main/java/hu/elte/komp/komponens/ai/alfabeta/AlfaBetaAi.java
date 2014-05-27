@@ -36,11 +36,7 @@ public class AlfaBetaAi implements AiInterface {
     
     private long alfabeta (GameGraphInterface gameGraph, Object step, int m, boolean maximizing, long alpha, long beta){
         long al=alpha, be=beta;
-        //ha levél, értéket kap
-        if  (!gameGraph.getPossibleSteps(step).iterator().hasNext()){
-            int a=1;
-        }
-        
+        //ha levél, értéket kap        
         if (m==0 || !gameGraph.getPossibleSteps(step).iterator().hasNext()){
             return gameGraph.getStepScoreForPlayer(step, false);
         }

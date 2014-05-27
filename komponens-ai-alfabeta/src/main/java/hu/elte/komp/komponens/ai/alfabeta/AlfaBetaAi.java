@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 @Stateless(name="hu.elte.komp.ai.alfabeta", mappedName = "hu.elte.komp.ai.alfabeta")
 @LocalBean
 public class AlfaBetaAi implements AiInterface {
-    private static final int MELYSEG=5;
+    private static final int MELYSEG=4;
 
     @Override
     public Object getNextStep(GameGraphInterface gameGraph, boolean youArePlayerOne) {
@@ -34,27 +34,31 @@ public class AlfaBetaAi implements AiInterface {
         return nextstep;
     }
     
-    private long alfabeta (GameGraphInterface gameGraph, Object node, int m, boolean maximizing, long alpha, long beta){
+    private long alfabeta (GameGraphInterface gameGraph, Object step, int m, boolean maximizing, long alpha, long beta){
         long al=alpha, be=beta;
         //ha levél, értéket kap
-        if (m==0 || !gameGraph.getPossibleSteps(node).iterator().hasNext()){
-          return gameGraph.getStepScoreForPlayer(node, false);
+        if  (!gameGraph.getPossibleSteps(step).iterator().hasNext()){
+            int a=1;
+        }
+        
+        if (m==0 || !gameGraph.getPossibleSteps(step).iterator().hasNext()){
+            return gameGraph.getStepScoreForPlayer(step, false);
         }
         
         //egyébként
         if (maximizing){
-            for(Object o: gameGraph.getPossibleSteps(node)){
-                be = Math.min(be, alfabeta(gameGraph, o, m-1, !maximizing, al, be));
-                if (be<=al) return al;
+            for(Object o: gameGraph.getPossibleSteps(step)){
+                al = Math.max(al, alfabeta(gameGraph, o, m-1, !maximizing, al, be));
+                if (be<=al) break;
             }
-            return be;
+            return al;
         }
         else {
-            for(Object o: gameGraph.getPossibleSteps(node)){
-                al = Math.max(al, alfabeta(gameGraph, o, m-1, !maximizing, al, be));
-                if (be<=al) return be;
+            for(Object o: gameGraph.getPossibleSteps(step)){
+                be = Math.min(be, alfabeta(gameGraph, o, m-1, !maximizing, al, be));
+                if (be<=al) break;
             }
-            return al; 
+            return be; 
         }
    }
 

@@ -70,6 +70,16 @@ public class KamisadoAiIterator implements Iterator<KamisadoAiIterator.StepInfo>
     public boolean hasNext() {
         
         char next = BoardHelper.nextMoveCharacter(b, playerOne);
+        
+        //nyertes állásokban nincs több lépés - teszt
+        for (int i=0;i<8;i++) {
+            if (b.charAt(i) >= 'a' && b.charAt(i) <= 'h') {
+                return false;
+            }
+            if (b.charAt(63-i) >= 'i' && b.charAt(63-i) <= 'p') {
+                return false;
+            }
+        }
  
         // search next item
         while(y < 8) {

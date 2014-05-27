@@ -22,15 +22,23 @@ public class StrikeCalculator implements ScoreCalculator {
     public long getScoreForStep(Object step) {
         KamisadoAiIterator.StepInfo si=(KamisadoAiIterator.StepInfo) step;
         
-        //konkrét nyertes-vesztes állások értéke 100 0 -100
-        int sum=calculateWin(si.board);
+        //konkrét nyertes-vesztes állások értéke (-100)-0-100
+        //10^4: (-1.000.000) - (1.000.000)
+        int sum=10000*calculateWin(si.board);
         
-        //lehetséges nyertes lépések
-        sum+=calculateWinStrikes(si.board,AILETTERS);
-        
-        //lehetséges vesztes lépések
+        //lehetséges nyertes - vesztes lépések (-24)-24
+        //10^4: (-240.000)-240.000
+        sum+=10000*calculateWinStrikes(si.board,AILETTERS);
         String newboard=new StringBuilder(si.board).reverse().toString();
-        sum-=calculateWinStrikes(newboard,HUMANLETTERS);
+        sum-=10000*calculateWinStrikes(newboard,HUMANLETTERS);
+        
+        //célhoz közelebbi pozíciók értékelése 0-56
+        //10^2: 0-5.600
+        sum+=100*calculateDistances(si.board,AILETTERS);
+        
+        //pozíciók elosztottságának értékelése 0-28
+        //10^0: 0-28
+        sum+=calculatePositions(si.board,AILETTERS);        
         
         return (long)sum;
     }
@@ -89,6 +97,28 @@ public class StrikeCalculator implements ScoreCalculator {
             }
         }
         return strikes;        
+    }
+    
+    private int calculateDistances(String board, String letters){
+        int dist=0;
+        for (char ch: letters.toCharArray()) {
+            int y=board.indexOf(ch) / 8;
+            dist+=y;
+        }        
+        return dist;
+    }
+    
+    private int calculatePositions(String board, String letters){
+        int dpos=0;
+        int tempy=0;
+        int i=0;
+        for (char ch: letters.toCharArray()) {
+            int y=board.indexOf(ch) / 8;
+            if(i>0) dpos+=Math.abs(y-tempy);
+            tempy=y;
+            ++i;
+        }        
+        return dpos;
     }
     
 }
